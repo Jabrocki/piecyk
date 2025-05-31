@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/widgets/circular_chart.dart'; // Import the circular chart
+import 'package:piecyk/widgets/vertical_button_list.dart'; // Import the vertical button list
 
 class MainPageResizableVertical extends StatelessWidget {
   
@@ -18,7 +19,7 @@ class MainPageResizableVertical extends StatelessWidget {
         FResizableRegion(
           initialExtent: (MediaQuery.sizeOf(context).height) * (1/3),
           minExtent: 100,
-          builder: (_, data, __) => Text('SUNSEER'),
+          builder: (_, data, __) => const VerticalButtonList(), // Replaced Text with VerticalButtonList
         ),
         FResizableRegion(
           initialExtent: 180,
