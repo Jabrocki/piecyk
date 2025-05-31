@@ -19,7 +19,8 @@ class _MainSidebarState extends State<MainSidebar> {
     return Stack(
       children: [
         AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeOut, // Changed from Curves.easeInOut
           width: _expanded ? 300 : 48, // <-- minimum width for button
           child: _expanded
               ? FSidebar(
