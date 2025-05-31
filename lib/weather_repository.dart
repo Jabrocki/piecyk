@@ -8,7 +8,7 @@ class WeatherRepository {
   WeatherRepository(this._weatherClient, this._loc);
 
   // klasa pogoda do zrobienia
-  Future<Weather> getWeatherForCurrentLocation() async {
+  Future<WeatherModel> getWeatherForCurrentLocation() async {
     final pos = await _loc.determinePosition();
     print("=== obtained position: $pos ===\n");
     final json = await _weatherClient.fetch(
