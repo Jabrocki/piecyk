@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:logger/logger.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+// Services
+import 'services/location_service.dart';
+import 'services/weather_api_client.dart';
 
 //Providers
 import 'providers/main_state.dart';
@@ -12,10 +18,21 @@ import 'layouts/main_page.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final Logger logger = Logger();
+  await dotenv.load(fileName: ".env");
+  final apiKEY = dotenv.env["API_KEY"] ?? "";
+  final baseURL = dotenv.env['BASE_URL'] ?? "";
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  // serwisy
+  final LocationService locationService = LocationService(logger: logger);
+  final WeatherApiClient weatherApiClient = WeatherApiClient(
+    apiKey: apiKEY,
+    baseUrl: baseURL,
+  );
+
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => MainState())],
