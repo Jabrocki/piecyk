@@ -28,27 +28,30 @@ class _MainPageState extends State<MainPage> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     // Determine which FColors to use based on the current theme.
     final FColors currentFColors = themeProvider.isDarkMode ? darkFColors : lightFColors;
-    final style = FTheme.of(context).style; // Assuming FStyle doesn't need to change or is handled elsewhere.
+    final FStyle style = FTheme.of(context).style; // Assuming FStyle doesn't need to change or is handled elsewhere.
 
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        child: FScaffold(
-          scaffoldStyle: generalStyle(colors: currentFColors, style: style),
-          header: const FHeader(title: TitleWidget()),
-          childPad: true,
-          footer: FBottomNavigationBar(children: const []),
-          sidebar: const MainSidebar(),
-          child: Center(
+    return FTheme(
+      data: FThemeData(colors: currentFColors, style: style),
+      child: Material(
+        type: MaterialType.transparency,
+        child: Container(
+          child: FScaffold(
+            scaffoldStyle: generalStyle(colors: currentFColors, style: style),
+            header: const FHeader(title: TitleWidget()),
+            childPad: true,
+            footer: FBottomNavigationBar(children: const []),
+            sidebar: const MainSidebar(),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  SizedBox(width: 50),
-                  Expanded(child: MainPageResizableVertical()),
-                  SizedBox(width: 50),
-                  Expanded(child: MainPageResizableVertical()),
-                  SizedBox(width: 50),
-                ],
+              child: Center(
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(width: 50),
+                    Expanded(child: MainPageResizableVertical()),
+                    SizedBox(width: 50),
+                    Expanded(child: MainPageResizableVertical()),
+                    SizedBox(width: 50),
+                  ],
+                ),
               ),
             ),
           ),
