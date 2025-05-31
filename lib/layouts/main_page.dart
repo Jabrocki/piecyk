@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/theme/general_style.dart';
-
+//import 'package:piecyk/widgets/sidebar.dart';
 import 'package:piecyk/widgets/main_page_resizable.dart';
 
 class MainPage extends StatelessWidget {
@@ -24,7 +24,32 @@ class MainPage extends StatelessWidget {
           child: Center(
             child: MainPageResizableVertical(),
           ),
-          sidebar: FSidebar(children: const []),
+          sidebar: FSidebar(
+            width: 500,
+            children: [
+            FSidebarGroup(
+              children: [
+                FSidebarItem(
+                  icon: const Icon(FIcons.layoutDashboard),
+                  label: const Text('Dashboard'),
+                  selected: true,
+                  onPress: () {},
+                ),
+                FSidebarItem(icon: const Icon(FIcons.chartLine), label: const Text('Analytics'), onPress: () {}),
+                FSidebarItem(
+                  icon: const Icon(FIcons.chartBar),
+                  label: const Text('Reports'),
+                  initiallyExpanded: true,
+                  children: [
+                    FSidebarItem(label: const Text('Daily'), onPress: () {}),
+                    FSidebarItem(label: const Text('Weekly'), onPress: () {}),
+                    FSidebarItem(label: const Text('Monthly'), onPress: () {}),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
           footer: FBottomNavigationBar(children: const []),
         ),
       ),
