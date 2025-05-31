@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
@@ -14,15 +15,18 @@ final ThemeData lightTheme = ThemeData(
     onBackground: Colors.black,
     onSurface: Colors.black,
   ),
-  textTheme: const TextTheme(
-    bodyLarge: TextStyle(color: Colors.black),
-    bodyMedium: TextStyle(color: Colors.black),
-    displayLarge: TextStyle(color: Colors.black),
-    displayMedium: TextStyle(color: Colors.black),
-    displaySmall: TextStyle(color: Colors.black),
-    headlineMedium: TextStyle(color: Colors.black),
-    headlineSmall: TextStyle(color: Colors.black),
-    titleLarge: TextStyle(color: Colors.black),
+  textTheme: GoogleFonts.robotoCondensedTextTheme(
+    const TextTheme(
+      bodyLarge: TextStyle(color: Colors.black),
+      bodyMedium: TextStyle(color: Colors.black),
+      displayLarge: TextStyle(color: Colors.black),
+      displayMedium: TextStyle(color: Colors.black),
+      displaySmall: TextStyle(color: Colors.black),
+      headlineMedium: TextStyle(color: Colors.black),
+      headlineSmall: TextStyle(color: Colors.black),
+      titleLarge: TextStyle(color: Colors.black),
+      labelLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.w400), // Added for buttons
+    ),
   ),
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,
@@ -38,6 +42,7 @@ final ThemeData lightTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.green,
       foregroundColor: Colors.white,
+      textStyle: GoogleFonts.robotoCondensed(fontWeight: FontWeight.w400), // Apply font to ElevatedButton
     ),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(

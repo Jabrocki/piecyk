@@ -165,8 +165,11 @@ class _VerticalDeviceListState extends State<VerticalDeviceList> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FButton(
-                              onPress: () {}, 
-                              child: Text("Add")
+                              onPress: () {},
+                              child: Text(
+                                "Add",
+                                style: TextStyle(fontFamily: 'RobotoCondensed', fontWeight: FontWeight.w400),
+                              ),
                             ),
                           ),
                         ],
@@ -181,7 +184,10 @@ class _VerticalDeviceListState extends State<VerticalDeviceList> {
                       children: [
                         const Icon(FIcons.zap),
                         const SizedBox(width: 10),
-                        const Text('Add Instalation'),
+                        const Text(
+                          'Add Instalation',
+                          style: TextStyle(fontFamily: 'RobotoCondensed', fontWeight: FontWeight.w400),
+                        ),
                       ],
                     ),
                   ),
