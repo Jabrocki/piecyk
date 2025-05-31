@@ -51,6 +51,21 @@ class MainPage extends StatelessWidget {
           ],
         ),
           footer: FBottomNavigationBar(children: const []),
+          child: Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: 50), 
+                Expanded(
+                  child: MainPageResizableVertical(),
+                ),
+                SizedBox(width: 50), 
+                Expanded(
+                  child: MainPageResizableVertical()
+                ),
+                SizedBox(width: 50), 
+              ],
+            ),
+          ),
         ),
       ),
     );
