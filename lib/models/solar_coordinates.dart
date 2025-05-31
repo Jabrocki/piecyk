@@ -2,18 +2,15 @@ import 'dart:math';
 
 /// Struktura przechowująca wyniki obliczeń pozycji Słońca:
 ///
-/// [zenithAngleDeg]  – kąt zenitalny (°) (0° = Słońce dokładnie pionowo nad nami,
+/// [zenithDegrees]  – kąt zenitalny (°) (0° = Słońce dokładnie pionowo nad nami,
 ///                    90° = przy horyzoncie),
-/// [azimuthAngleDeg] – azymut Słońca (° od północy, w prawo; 0° = północ,
+/// [azimuthDegrees] – azymut Słońca (° od północy, w prawo; 0° = północ,
 ///                    90° = wschód, 180° = południe, 270° = zachód).
 class SolarCoordinates {
-  final double zenithAngleDeg;
-  final double azimuthAngleDeg;
+  final double zenithDegrees;
+  final double azimuthDegrees;
 
-  SolarCoordinates({
-    required this.zenithAngleDeg,
-    required this.azimuthAngleDeg,
-  });
+  SolarCoordinates({required this.zenithDegrees, required this.azimuthDegrees});
 }
 
 /// Klasa pomocnicza do obliczeń astronomicznych.
@@ -128,8 +125,8 @@ class SolarCalculator {
     double azimuthDeg = (_radToDeg(azimuthRad) + 180.0) % 360.0;
 
     return SolarCoordinates(
-      zenithAngleDeg: zenithDeg,
-      azimuthAngleDeg: azimuthDeg,
+      zenithDegrees: zenithDeg,
+      azimuthDegrees: azimuthDeg,
     );
   }
 

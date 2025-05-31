@@ -1,15 +1,15 @@
 /// Model pojedynczego modułu fotowoltaicznego.
 ///
-/// [nominalPowerWatts]       – moc modułu w warunkach STC (W),
-/// [efficiencyAtSTC]         – sprawność modułu przy STC (liczba z przedziału 0–1),
-/// [surfaceAreaM2]           – powierzchnia modułu w metrach kwadratowych,
-/// [noctCelsius]             – Nominal Operating Cell Temperature (°C),
-/// [temperatureCoeffPerC]    – współczynnik temperaturowy mocy [%/°C] (np. 0.004 = 0,4%/°C).
-///                            W kodzie traktujemy to jako dodatnią wartość, ale w formułach
-///                            zawsze odejmujemy wpływ temperatury (im wyższa, tym moc mniejsza).
+/// [powerWatts]       – moc modułu w warunkach STC (W),
+/// [efficiencySTC]    – sprawność modułu przy STC (liczba z przedziału 0–1),
+/// [areaM2]           – powierzchnia modułu w metrach kwadratowych,
+/// [noct]             – Nominal Operating Cell Temperature (°C),
+/// [temperatureCoeff] – współczynnik temperaturowy mocy [%/°C] (np. 0.004 = 0,4%/°C).
+///                      W kodzie traktujemy to jako dodatnią wartość, ale w formułach
+///                      zawsze odejmujemy wpływ temperatury (im wyższa, tym moc mniejsza).
 class Panel {
   /// Moc modułu w warunkach STC (W).
-  final double nominalPowerWatts;
+  final double powerWatts;
 
   /// Maksymalne napięcie modułu (V). Nie jest obecnie bezpośrednio wykorzystywane
   /// w obliczeniach energetycznych, ale może być przydatne przy doborze stringów.
@@ -22,27 +22,27 @@ class Panel {
   final double tiltAngleDegrees;
 
   /// Sprawność modułu przy STC (np. 0.18 = 18%).
-  final double efficiencyAtSTC;
+  final double efficiencySTC;
 
   /// Powierzchnia modułu (m²).
-  final double surfaceAreaM2;
+  final double areaM2;
 
   /// NOCT (Nominal Operating Cell Temperature), °C.
-  final double noctCelsius;
+  final double noct;
 
   /// Współczynnik temperaturowy mocy [%/°C], np. 0.004 = 0,4%/°C.
-  final double temperatureCoeffPerC;
+  final double temperatureCoeff;
 
   Panel({
-    required this.nominalPowerWatts,
+    required this.powerWatts,
     required this.maxVoltage,
     required this.tiltAngleDegrees,
-    required this.efficiencyAtSTC,
-    required this.surfaceAreaM2,
-    required this.noctCelsius,
-    required this.temperatureCoeffPerC,
+    required this.efficiencySTC,
+    required this.areaM2,
+    required this.noct,
+    required this.temperatureCoeff,
   });
 
   /// Moc modułu w kW (STC).
-  double get nominalPowerKw => nominalPowerWatts / 1000.0;
+  double get powerKw => powerWatts / 1000.0;
 }
