@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:piecyk/models/weather_model.dart';
+import 'package:piecyk/providers/login_state.dart';
 import 'package:piecyk/repositories/weather_repository.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -15,9 +15,12 @@ import 'providers/main_state.dart';
 
 //Layouts
 import 'layouts/main_page.dart';
+import 'layouts/login_page.dart';
 
 //Firebase options
 import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   final Logger logger = Logger();
@@ -47,6 +50,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (_) => MainState(weatherRepo: weatherRepository),
         ),
+        ChangeNotifierProvider(
+          create: (_) => LoginState(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -63,7 +69,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainPage(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          late Widget page;
+          if (snapshot.hasData) {
+            page = MainPage();
+          } else {
+            page = LoginPage();
+          }
+          return page;
+        },
+      ),
     );
   }
 }
