@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/providers/main_state.dart';
@@ -10,7 +8,6 @@ import 'package:piecyk/widgets/title_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
-import '../providers/main_state.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -37,7 +34,7 @@ class _MainPageState extends State<MainPage> {
       type: MaterialType.transparency,
       child: Container(
         child: FScaffold(
-          scaffoldStyle: generalStyle(colors: colors, style: style),
+          scaffoldStyle: generalStyle(colors: currentFColors, style: style),
           header: const FHeader(title: TitleWidget()),
           childPad: true,
           footer: FBottomNavigationBar(children: const []),
