@@ -1,17 +1,35 @@
 class WeatherModel {
-  final double time;
-  final double dni; //direct normal irradiance DNI W/m^2
-  final double dif; // diffuse solar radiation DIF W/m^2
-  final double ghi; // shortwave solar radiation GHI W/m^2
-  final double temp; // apparent_temperature °C
-  final double windSpeed; // wind speed 100m (cokolwiek znaczy 100m xd) km/h
+  //general data
+  final List<String> time;
+  final List<double> dni; //direct normal irradiance DNI W/m^2
+  final List<double> dif; // diffuse solar radiation DIF W/m^2
+  final List<double> ghi; // shortwave solar radiation GHI W/m^2
+  final List<double> temp; // apparent_temperature °C
+  final List<double>
+  windSpeed; // wind speed 100m (cokolwiek znaczy 100m xd) km/h
+  // precise data
+  final double lat;
+  final double long;
+  final String timezone;
+  final String timezoneAbbreviation;
+  final double elevation;
+  final Map<String, String> units;
 
   WeatherModel({
+    // general data
     required this.time,
     required this.dni,
     required this.dif,
     required this.ghi,
     required this.temp,
     required this.windSpeed,
+
+    // precise data
+    required this.lat,
+    required this.long,
+    required this.timezone,
+    required this.timezoneAbbreviation,
+    required this.elevation,
+    required this.units,
   });
 }
