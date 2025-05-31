@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/widgets/circular_chart.dart'; // Import the circular chart
-import 'package:piecyk/widgets/vertical_button_list.dart'; // Import the vertical button list
+
 
 class DeviceInfoCollumn extends StatelessWidget {
   const DeviceInfoCollumn({super.key});
@@ -117,7 +117,7 @@ class _VerticalDeviceListState extends State<VerticalDeviceList> {
                               children: [
                                 Icon(FIcons.plug),
                                 Text(
-                                  "Device",
+                                  "Instalation",
                                   style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
@@ -181,7 +181,7 @@ class _VerticalDeviceListState extends State<VerticalDeviceList> {
                       children: [
                         const Icon(FIcons.zap),
                         const SizedBox(width: 10),
-                        const Text('Add Device'),
+                        const Text('Add Instalation'),
                       ],
                     ),
                   ),
