@@ -6,6 +6,7 @@ import 'package:piecyk/providers/weather_state.dart';
 import 'package:provider/provider.dart';
 import 'smooth_line_chart.dart';
 import 'package:piecyk/widgets/circular_chart.dart'; // Import the circular chart
+import 'package:piecyk/widgets/select_date.dart';
 import 'package:piecyk/widgets/vertical_button_list.dart'; // Import the vertical button list
 
 class chartAndInfoVertical extends StatelessWidget {

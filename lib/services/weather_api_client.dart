@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -17,8 +18,32 @@ class WeatherApiClient {
   }) : httpClient = httpClient ?? http.Client();
 
   // TEMPORARILY fixed values of {start,end}date and parameters in json
-  final String startDate = "2024-05-01";
-  final String endDate = "2024-05-02";
+  String _startDate = "2024-05-01";
+  String _endDate = "2024-05-02";
+  // getters for dates
+  String get startDate => _startDate;
+  String get endDate => _endDate;
+  // setters for dates
+  set startDate(String value) {
+    if (RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(value)) {
+      _startDate = value;
+    } else {
+      throw FormatException(
+        'Incorrect date dormat: $value, expected YYYY-MM-DD',
+      );
+    }
+  }
+
+  set endDate(String value) {
+    if (RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(value)) {
+      _endDate = value;
+    } else {
+      throw FormatException(
+        'Incorrect date dormat: $value, expected YYYY-MM-DD',
+      );
+    }
+  }
+
   final String parameters =
       "direct_normal_irradiance,diffuse_radiation,shortwave_radiation,apparent_temperature,wind_speed_100m";
 
