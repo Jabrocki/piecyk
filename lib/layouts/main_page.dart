@@ -3,6 +3,7 @@ import 'package:forui/forui.dart';
 import 'package:piecyk/theme/general_style.dart';
 import 'package:piecyk/widgets/sidebar.dart';
 import 'package:piecyk/widgets/main_page_resizable.dart';
+import 'package:piecyk/widgets/title_widget.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -18,7 +19,7 @@ class MainPage extends StatelessWidget {
         child: FScaffold(
           scaffoldStyle: generalStyle(colors: colors, style: style),
           header: const FHeader(
-            title: Text('SUNSEER'),
+            title: TitleWidget(),
           ),
           childPad: true,
           footer: FBottomNavigationBar(children: const []),
