@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/providers/main_state.dart';
 import 'package:piecyk/theme/general_style.dart';
@@ -9,6 +10,7 @@ import 'package:piecyk/widgets/title_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
+import 'package:piecyk/widgets/select_date.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -44,13 +46,20 @@ class _MainPageState extends State<MainPage> {
             sidebar: const MainSidebar(),
             child: Center(
               child: Center(
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 50),
-                    Expanded(child: DeviceInfoCollumn(),),
-                    SizedBox(width: 50),
-                    Expanded(child: MainPageResizableVertical()),
-                    SizedBox(width: 50),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        SizedBox(width: 50),
+                        Expanded(child: DeviceInfoCollumn()),
+                        SizedBox(width: 50),
+                        Expanded(child: MainPageResizableVertical()),
+                        SizedBox(width: 50),
+                      ],
+                    ),
+                    const SizedBox(height: 24), // Optional: space between row and SelectDate
+                    SelectDate(), // <-- Add this line
                   ],
                 ),
               ),

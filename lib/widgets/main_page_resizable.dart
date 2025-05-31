@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/widgets/circular_chart.dart'; // Import the circular chart
+import 'package:piecyk/widgets/select_date.dart';
 import 'package:piecyk/widgets/vertical_button_list.dart'; // Import the vertical button list
+import 'package:piecyk/widgets/select_date.dart';
 
 class MainPageResizableVertical extends StatelessWidget {
   
@@ -43,6 +45,7 @@ class MainPageResizableVertical extends StatelessWidget {
                   child: Text('Lmao power goes brr', textAlign: TextAlign.center),
                 ),
               ],
+              
             ),
           ),
         ),
