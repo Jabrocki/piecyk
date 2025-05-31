@@ -10,13 +10,22 @@ class MainPage extends StatelessWidget {
     final colors = FTheme.of(context).colors;
     final style = FTheme.of(context).style;
 
-    return FScaffold(
-      scaffoldStyle: generalStyle(colors: colors, style: style),
-      header: FHeader(title: const Text('Main Page')),
-      childPad: true,
-      sidebar: FSidebar(children: const []),
-      footer: FBottomNavigationBar(children: const []),
-      child: const Center(child: Text('Hi')),
+    return Material(
+      type: MaterialType.transparency,
+      child: Container(
+        child: FScaffold(
+          scaffoldStyle: generalStyle(colors: colors, style: style),
+          header: const FHeader(
+            title: Text('Main Page'),
+          ),
+          childPad: true,
+          child: const Center(
+            child: Text('Hi'),
+          ),
+          sidebar: FSidebar(children: const []),
+          footer: FBottomNavigationBar(children: const []),
+        ),
+      ),
     );
   }
 }
