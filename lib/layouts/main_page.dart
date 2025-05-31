@@ -21,11 +21,23 @@ class MainPage extends StatelessWidget {
             title: Text('SUNSEER'),
           ),
           childPad: true,
-          child: Center(
-            child: MainPageResizableVertical(),
-          ),
           sidebar: FSidebar(children: const []),
           footer: FBottomNavigationBar(children: const []),
+          child: Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: 50), 
+                Expanded(
+                  child: MainPageResizableVertical(),
+                ),
+                SizedBox(width: 50), 
+                Expanded(
+                  child: MainPageResizableVertical()
+                ),
+                SizedBox(width: 50), 
+              ],
+            ),
+          ),
         ),
       ),
     );
