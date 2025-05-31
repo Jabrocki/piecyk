@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+        <!-- Pozwala na odczyt dokładnej lokalizacji (GPS) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Pozwala na odczyt przybliżonej lokalizacji (sieci komórkowe, Wi-Fi) -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+
     <application
         android:label="piecyk"
         android:name="${applicationName}"

@@ -4,6 +4,13 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<!-- Pozwolenie na lokalizację, gdy aplikacja jest w użyciu (“When In Use”) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to get weather info</string>
+	<!-- Dla iOS 11+ możesz dodać opcjonalny klucz: -->
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location is required for this app to get weather info</string>
+
 	<key>CFBundleDisplayName</key>
 	<string>Piecyk</string>
 	<key>CFBundleExecutable</key>
