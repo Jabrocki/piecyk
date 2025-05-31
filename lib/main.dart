@@ -43,7 +43,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => MainState())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => MainState(weatherRepo: weatherRepository),
+        ),
+      ],
       child: MyApp(),
     ),
   );
