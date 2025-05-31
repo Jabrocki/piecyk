@@ -4,11 +4,13 @@ class TextGradientAnimation extends StatefulWidget {
   final String text;
   final TextStyle style;
   final Duration duration;
+  final Color finalGradientColor; // Added finalGradientColor
 
   const TextGradientAnimation({
     super.key,
     required this.text,
     required this.style,
+    required this.finalGradientColor, // Make it required
     this.duration = const Duration(seconds: 3),
   });
 
@@ -29,7 +31,11 @@ class _TextGradientAnimationState extends State<TextGradientAnimation>
       duration: widget.duration,
       vsync: this,
     );
+    _initializeAnimations();
+    _controller.forward();
+  }
 
+  void _initializeAnimations() {
     _gradientColorAnimation1 = TweenSequence<Color?>(
       [
         TweenSequenceItem(
@@ -37,7 +43,7 @@ class _TextGradientAnimationState extends State<TextGradientAnimation>
           weight: 50.0,
         ),
         TweenSequenceItem(
-          tween: ColorTween(begin: Colors.yellow, end: Colors.black),
+          tween: ColorTween(begin: Colors.yellow, end: widget.finalGradientColor),
           weight: 50.0,
         ),
       ],
@@ -46,17 +52,27 @@ class _TextGradientAnimationState extends State<TextGradientAnimation>
     _gradientColorAnimation2 = TweenSequence<Color?>(
       [
         TweenSequenceItem(
-          tween: ColorTween(begin: Colors.yellow, end: Colors.black),
+          tween: ColorTween(begin: Colors.yellow, end: widget.finalGradientColor),
           weight: 50.0,
         ),
         TweenSequenceItem(
-          tween: ColorTween(begin: Colors.black, end: Colors.black), // Stays black
+          tween: ColorTween(begin: widget.finalGradientColor, end: widget.finalGradientColor),
           weight: 50.0,
         ),
       ],
     ).animate(_controller);
+  }
 
-    _controller.forward();
+  @override
+  void didUpdateWidget(TextGradientAnimation oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.finalGradientColor != oldWidget.finalGradientColor) {
+      // Re-initialize animations with the new finalGradientColor
+      _initializeAnimations();
+      // Restart the animation
+      _controller.reset();
+      _controller.forward();
+    }
   }
 
   @override

@@ -12,6 +12,7 @@ import 'services/weather_api_client.dart';
 
 //Providers
 import 'providers/main_state.dart';
+import 'package:piecyk/providers/theme_provider.dart'; // Added import
 
 //Layouts
 import 'layouts/main_page.dart';
@@ -55,6 +56,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (_) => LoginState(),
         ),
+        ChangeNotifierProvider( // Added ThemeProvider
+          create: (_) => ThemeProvider(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -66,11 +70,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context); // Access ThemeProvider
     return MaterialApp(
       title: 'Piecyk',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: themeProvider.themeData, // Use theme from ThemeProvider
+      // theme: ThemeData(  // Removed old theme
+      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      // ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

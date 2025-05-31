@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:provider/provider.dart';
+import 'package:piecyk/providers/theme_provider.dart';
 
 class MainSidebar extends StatefulWidget {
   const MainSidebar({super.key});
@@ -13,6 +15,7 @@ class _MainSidebarState extends State<MainSidebar> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Stack(
       children: [
         AnimatedContainer(
@@ -50,7 +53,17 @@ class _MainSidebarState extends State<MainSidebar> {
                     ),
                   ],
                 )
-              : null,
+              : Container( // Container to hold the IconButton when collapsed
+                  alignment: Alignment.bottomCenter,
+                  padding: const EdgeInsets.only(bottom: 8), // Add some padding
+                  child: IconButton(
+                    icon: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
+                    tooltip: 'Toggle theme',
+                    onPressed: () {
+                      Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+                    },
+                  ),
+                ),
         ),
         Positioned(
           top: 8,
@@ -61,6 +74,21 @@ class _MainSidebarState extends State<MainSidebar> {
             onPressed: () => setState(() => _expanded = !_expanded),
           ),
         ),
+        // Positioned theme toggle button at the bottom of the Stack, visible in both states
+        // This ensures it's always at the bottom, regardless of FSidebar's internal structure.
+        if (_expanded) // Only show if expanded, otherwise it's inside the collapsed container
+          Positioned(
+            bottom: 8,
+            left: 0,
+            right: 0, // Center it horizontally if sidebar is wider
+            child: IconButton(
+              icon: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
+              tooltip: 'Toggle theme',
+              onPressed: () {
+                Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+              },
+            ),
+          ),
       ],
     );
   }
