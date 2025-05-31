@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:piecyk/models/weather_model.dart';
+import 'package:piecyk/models/weather_model.dart';
 import 'package:piecyk/providers/login_state.dart';
 import 'package:piecyk/repositories/weather_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:logger/logger.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Services
 import 'services/location_service.dart';
@@ -25,12 +25,12 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   final Logger logger = Logger();
-  // await dotenv.load(fileName: "../.env");
+  await dotenv.load(fileName: "../.env");
   // final apiKEY = dotenv.env["API_KEY"] ?? "";
-  final baseURL = "https://archive-api.open-meteo.com/v1/archive?";
+  final baseURL = dotenv.env['BASE_URL'] ?? "";
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+// Initialize Firebase
   // serwisy
   final LocationService locationService = LocationService(logger: logger);
   final WeatherApiClient weatherApiClient = WeatherApiClient(
@@ -51,12 +51,12 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) =>
-              MainState(weatherRepo: weatherRepository, logger: logger),
+          create: (_) => MainState(weatherRepo: weatherRepository, logger: logger),
         ),
-        ChangeNotifierProvider(create: (_) => LoginState()),
         ChangeNotifierProvider(
-          // Added ThemeProvider
+          create: (_) => LoginState(),
+        ),
+        ChangeNotifierProvider( // Added ThemeProvider
           create: (_) => ThemeProvider(),
         ),
       ],
@@ -70,9 +70,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(
-      context,
-    ); // Access ThemeProvider
+    final themeProvider = Provider.of<ThemeProvider>(context); // Access ThemeProvider
     return MaterialApp(
       title: 'Piecyk',
       theme: themeProvider.themeData, // Use theme from ThemeProvider
