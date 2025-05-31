@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/theme/general_style.dart';
 
+import 'package:piecyk/widgets/main_page_resizable.dart';
+
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
@@ -16,14 +18,26 @@ class MainPage extends StatelessWidget {
         child: FScaffold(
           scaffoldStyle: generalStyle(colors: colors, style: style),
           header: const FHeader(
-            title: Text('Main Page'),
+            title: Text('SUNSEER'),
           ),
           childPad: true,
-          child: const Center(
-            child: Text('Hi'),
-          ),
           sidebar: FSidebar(children: const []),
           footer: FBottomNavigationBar(children: const []),
+          child: Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: 50), 
+                Expanded(
+                  child: MainPageResizableVertical(),
+                ),
+                SizedBox(width: 50), 
+                Expanded(
+                  child: MainPageResizableVertical()
+                ),
+                SizedBox(width: 50), 
+              ],
+            ),
+          ),
         ),
       ),
     );
