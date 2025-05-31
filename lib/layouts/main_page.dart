@@ -12,15 +12,11 @@ class MainPage extends StatelessWidget {
 
     return FScaffold(
       scaffoldStyle: generalStyle(colors: colors, style: style),
-      header: FHeader(
-        title: const Text('Main Page'),
-      ),
+      header: FHeader(title: const Text('Main Page')),
       childPad: true,
-      child: const Center(
-        child: Text('Hi'),
-      ),
       sidebar: FSidebar(children: const []),
       footer: FBottomNavigationBar(children: const []),
+      child: const Center(child: Text('Hi')),
     );
   }
 }

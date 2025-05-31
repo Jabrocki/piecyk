@@ -19,7 +19,7 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   final Logger logger = Logger();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "../.env");
   final apiKEY = dotenv.env["API_KEY"] ?? "";
   final baseURL = dotenv.env['BASE_URL'] ?? "";
 
