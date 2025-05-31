@@ -16,39 +16,65 @@ class _MainSidebarState extends State<MainSidebar> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+    double sidebarWidth = _expanded
+        ? (screenWidth * 0.2).clamp(150, 600) // 20% of screen, min 200, max 400
+        : 48.0;
+    final showLabels = sidebarWidth >= 169;
+
+    if (!showLabels) {
+      sidebarWidth = 80.0;
+    }
     return Stack(
       children: [
         AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           curve: Curves.easeOut, // Changed from Curves.easeInOut
-          width: _expanded ? 300 : 48, // <-- minimum width for button
+          width: sidebarWidth.toDouble(), // <-- minimum width for button
           child: _expanded
               ? FSidebar(
                   width: 300,
-                  header: const SizedBox(height: 48), // reserve space for button
+                  header: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // if (showLabels) ...[
+                        //   Text(
+                        //     'Menu', // <-- your title (napis)
+                        //     style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        //           fontWeight: FontWeight.bold,
+                        //           letterSpacing: 1.2,
+                        //         ),
+                        //   ),
+                        // ],
+                        const SizedBox(height: 20),
+                        Container(
+                          height: 1,
+                          color: Colors.black.withOpacity(0.08), // subtle line
+                        ),
+                      ],
+                    ),
+                  ),
+                  //padding: EdgeInsets.zero,
                   children: [
                     FSidebarGroup(
                       children: [
                         FSidebarItem(
                           icon: const Icon(FIcons.layoutDashboard),
-                          label: const Text('Dashboard'),
+                          label: showLabels ? const Text('Dashboard') : null,
                           selected: true,
                           onPress: () {},
                         ),
                         FSidebarItem(
-                          icon: const Icon(FIcons.settings),
-                          label: const Text('Settings'),
+                          icon: const Icon(FIcons.network),
+                          label: showLabels ? const Text('Devices') : null,
                           onPress: () {},
                         ),
                         FSidebarItem(
-                          icon: const Icon(FIcons.chartBar),
-                          label: const Text('Reports'),
-                          initiallyExpanded: true,
-                          children: [
-                            FSidebarItem(label: const Text('Daily'), onPress: () {}),
-                            FSidebarItem(label: const Text('Weekly'), onPress: () {}),
-                            FSidebarItem(label: const Text('Monthly'), onPress: () {}),
-                          ],
+                          icon: const Icon(FIcons.settings),
+                          label: showLabels ? const Text('Settings') : null,
+                          onPress: () {},
                         ),
                       ],
                     ),
@@ -68,11 +94,16 @@ class _MainSidebarState extends State<MainSidebar> {
         ),
         Positioned(
           top: 8,
-          left: 8,
-          child: IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: _expanded ? 'Hide sidebar' : 'Show sidebar',
-            onPressed: () => setState(() => _expanded = !_expanded),
+          left: 12,
+          child: SizedBox(
+            width: 48,
+            height: 48,
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(Icons.menu),
+              tooltip: _expanded ? 'Hide sidebar' : 'Show sidebar',
+              onPressed: () => setState(() => _expanded = !_expanded),
+            ),
           ),
         ),
         // Positioned theme toggle button at the bottom of the Stack, visible in both states
