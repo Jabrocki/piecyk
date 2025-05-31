@@ -1,11 +1,11 @@
 class WeatherModel {
   //general data
-  final List<String> time;
-  final List<double> dni; //direct normal irradiance DNI W/m^2
-  final List<double> dif; // diffuse solar radiation DIF W/m^2
-  final List<double> ghi; // shortwave solar radiation GHI W/m^2
-  final List<double> temp; // apparent_temperature °C
-  final List<double>
+  final List<dynamic> time;
+  final List<dynamic> dni; //direct normal irradiance DNI W/m^2
+  final List<dynamic> dif; // diffuse solar radiation DIF W/m^2
+  final List<dynamic> ghi; // shortwave solar radiation GHI W/m^2
+  final List<dynamic> temp; // apparent_temperature °C
+  final List<dynamic>
   windSpeed; // wind speed 100m (cokolwiek znaczy 100m xd) km/h
   // precise data
   final double lat;
