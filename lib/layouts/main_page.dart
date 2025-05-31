@@ -34,19 +34,7 @@ class MainPage extends StatelessWidget {
             ),
             childPad: true,
             footer: FBottomNavigationBar(children: const []),
-            sidebar: Column(
-              children: [
-                const Expanded(
-                  child: MainSidebar(),
-                ),
-                IconButton(
-                  icon: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
-                  onPressed: () {
-                    Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-                  },
-                ),
-              ],
-            ),
+            sidebar: const MainSidebar(), // Use MainSidebar directly
             child: Center(
               child: Center(
                 child: Row(
