@@ -9,7 +9,7 @@ class WeatherModel {
   windSpeed; // wind speed 100m (cokolwiek znaczy 100m xd) km/h
   // precise data
   final double lat;
-  final double long;
+  final double lon;
   final String timezone;
   final String timezoneAbbreviation;
   final double elevation;
@@ -26,10 +26,21 @@ class WeatherModel {
 
     // precise data
     required this.lat,
-    required this.long,
+    required this.lon,
     required this.timezone,
     required this.timezoneAbbreviation,
     required this.elevation,
     required this.units,
-  });
+  }) {
+    final len = time.length;
+    if (dni.length != len ||
+        dif.length != len ||
+        ghi.length != len ||
+        temp.length != len ||
+        windSpeed.length != len) {
+      throw ArgumentError(
+        'Listy dni, dif, ghi, temp i windSpeed muszą mieć taką samą długość co time.',
+      );
+    }
+  }
 }

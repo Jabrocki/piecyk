@@ -40,7 +40,9 @@ Future<void> main() async {
     locationClient: locationService,
   );
 
-  WidgetsFlutterBinding.ensureInitialized();
+  // WeatherModel weatherData = await weatherRepository
+  //     .getWeatherForCurrentLocation();
+
   runApp(
     MultiProvider(
       providers: [

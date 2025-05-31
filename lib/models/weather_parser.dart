@@ -11,7 +11,7 @@ class WeatherParser {
       temp: (hourly['apparent_temperature']) as List<double>,
       windSpeed: (hourly['wind_speed_100m']) as List<double>,
       lat: (json['latitude'] as num).toDouble(),
-      long: (json['longituge'] as num).toDouble(),
+      lon: (json['longituge'] as num).toDouble(),
       timezone: (json['timezon']) as String,
       timezoneAbbreviation: (json['timezone_abbreviation']) as String,
       elevation: (json['elevation'] as num).toDouble(),
