@@ -61,7 +61,7 @@ class _MainPageState extends State<MainPage> {
                         SizedBox(width: 50),
                         Expanded(child: DeviceInfoCollumn()),
                         SizedBox(width: 50),
-                        Expanded(child: MainPageResizableVertical()),
+                        Expanded(child: chartAndInfoVertical()),
                         SizedBox(width: 50),
                       ],
                     ),
