@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:piecyk/models/weather_model.dart';
+// import 'package:piecyk/models/weather_model.dart';
 import 'package:piecyk/providers/login_state.dart';
 import 'package:piecyk/repositories/weather_repository.dart';
 import 'package:provider/provider.dart';
@@ -50,11 +50,10 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => MainState(weatherRepo: weatherRepository),
+          create: (_) =>
+              MainState(weatherRepo: weatherRepository, logger: logger),
         ),
-        ChangeNotifierProvider(
-          create: (_) => LoginState(),
-        ),
+        ChangeNotifierProvider(create: (_) => LoginState()),
       ],
       child: MyApp(),
     ),
