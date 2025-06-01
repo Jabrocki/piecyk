@@ -63,16 +63,20 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final theme = FTheme.of(context); // Get FTheme instance
+
+    return Padding( padding:EdgeInsets.fromLTRB(10,0,10,0), child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Pole dla daty początkowej
         FDateField(
           controller: _startDateController,
-          label: const Text('Start Date'),
-          description: const Text('Select a starting date'),
+          label: Text('Select a starting date', style: TextStyle(color: theme.colors.foreground)), // Apply theme to label
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          prefixBuilder: (context, styles, child) => const Icon(Icons.calendar_today),
+          prefixBuilder: (context, styles, child) => Padding(
+            padding: const EdgeInsets.only(left: 8.0), // Add left padding to the icon
+            child: Icon(Icons.calendar_today, color: theme.colors.foreground),
+          ), // Apply theme to icon
           clearable: true,
           onChange: (DateTime? selected) {
             if (selected != null) {
@@ -83,14 +87,17 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
             }
           },
         ),
-        const SizedBox(height: 10),
         // Pole dla daty końcowej
+        const SizedBox(height: 10),
         FDateField(
+          
           controller: _endDateController,
-          label: const Text('End Date'),
-          description: const Text('Select an ending date'),
+          label: Text('Select an ending date', style: TextStyle(color: theme.colors.foreground)), // Apply theme to label
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          prefixBuilder: (context, styles, child) => const Icon(Icons.calendar_today),
+          prefixBuilder: (context, styles, child) => Padding(
+            padding: const EdgeInsets.only(left: 8.0), // Add left padding to the icon
+            child: Icon(Icons.calendar_today, color: theme.colors.foreground),
+          ), // Apply theme to icon
           clearable: true,
           onChange: (DateTime? selected) {
             if (selected != null) {
@@ -102,13 +109,8 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
           },
         ),
         const SizedBox(height: 10),
-        // Wyświetlanie wybranych dat
-        Text('Początek: ${_formatDate(_startDateController.value)}'),
-        Text('Koniec: ${_formatDate(_endDateController.value)}'),
-        Text('static poczatek: ${WeatherApiClient.startDate}'),
-        Text('static koniec: ${WeatherApiClient.endDate}')
       ],
-    );
+    ));
   }
 
   @override
