@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
     final FStyle style = FTheme.of(
       context,
     ).style; // Assuming FStyle doesn't need to change or is handled elsewhere.
-    final String tarrif;
+    final tarrifs = ["C22", "C21", "C12A", "C11"];
 
     return FTheme(
       data: FThemeData(colors: currentFColors, style: style),
@@ -72,6 +72,7 @@ class _MainPageState extends State<MainPage> {
                         ],
                       ),
                     ),
+                    //sdfsdfsdf
                   ],
                 ),
               ),
