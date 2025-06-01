@@ -20,12 +20,12 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
     super.initState();
     _startDateController = FDateFieldController(
       vsync: this,
-      initialDate: DateTime.now(), // Domyślna data początkowa
+      initialDate: DateTime.now().subtract(const Duration(days: 36)), // Domyślna data początkowa
       validator: _validateStartDate,
     );
     _endDateController = FDateFieldController(
       vsync: this,
-      initialDate: DateTime.now(), // Domyślna data końcowa
+      initialDate: DateTime.now().subtract(const Duration(days: 6)), // Domyślna data końcowa
       validator: _validateEndDate,
     );
   }
@@ -33,10 +33,10 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
   // Walidacja daty początkowej
   String? _validateStartDate(DateTime? date) {
     if (date == null) {
-      return 'Wybierz datę początkową';
+      return 'Select a starting date';
     }
-    if (date.isAfter(DateTime.now())) {
-      return 'Data początkowa musi być dzisiaj lub wcześniej';
+    if (date.isAfter(DateTime.now().subtract(const Duration(days: 6)))) {
+      return 'The start date must be at least 6 days earlier.';
     }
     return null;
   }
@@ -44,20 +44,20 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
   // Walidacja daty końcowej
   String? _validateEndDate(DateTime? date) {
     if (date == null) {
-      return 'Wybierz datę końcową';
+      return 'Select the end date';
     }
-    if (date.isAfter(DateTime.now())) {
-      return 'Data końcowa musi być dzisiaj lub wcześniej';
+    if (date.isAfter(DateTime.now().subtract(const Duration(days: 5)))) {
+      return 'The end date must be at least 5 days earlier than today';
     }
     if (_startDateController.value != null && date.isBefore(_startDateController.value!)) {
-      return 'Data końcowa musi być po dacie początkowej';
+      return 'The end date must come after the start date';
     }
     return null;
   }
 
   // Formatowanie daty do YYYY-MM-DD
   String _formatDate(DateTime? date) {
-    if (date == null) return 'Wybierz datę';
+    if (date == null) return 'Pick a date';
     return DateFormat('yyyy-MM-dd').format(date);
   }
 
@@ -76,7 +76,9 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
           clearable: true,
           onChange: (DateTime? selected) {
             if (selected != null) {
-              setState(() {});
+              setState(() {
+                WeatherApiClient.startDate = _formatDate(selected);
+              });
               //context.read<MainState>().startDate = _formatDate(selected);
             }
           },
@@ -92,7 +94,9 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
           clearable: true,
           onChange: (DateTime? selected) {
             if (selected != null) {
-              setState(() {});
+              setState(() {
+                WeatherApiClient.endDate = _formatDate(selected);
+              });
               //context.read<MainState>().endDate = _formatDate(selected);
             }
           },
@@ -101,6 +105,8 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
         // Wyświetlanie wybranych dat
         Text('Początek: ${_formatDate(_startDateController.value)}'),
         Text('Koniec: ${_formatDate(_endDateController.value)}'),
+        Text('static poczatek: ${WeatherApiClient.startDate}'),
+        Text('static koniec: ${WeatherApiClient.endDate}')
       ],
     );
   }
