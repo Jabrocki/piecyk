@@ -69,10 +69,10 @@ class _MainPageState extends State<MainPage> {
                         ],
                       ),
                     ),
+                    SelectDate(), // Moved SelectDate here
                   ],
                 ),
-                SelectDate(),
-              ],),
+              ),
             ),
           ),
         ),
