@@ -45,12 +45,16 @@ class SmoothLineChart extends StatelessWidget {
       maxY: maxY,
       titlesData: FlTitlesData(
         bottomTitles: AxisTitles(
-          axisNameWidget: Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: Text(
-              xAxisLabel,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+          axisNameWidget: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: 75,),
+              Text(
+                xAxisLabel,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
           sideTitles: SideTitles(
             showTitles: true,
@@ -71,19 +75,33 @@ class SmoothLineChart extends StatelessWidget {
           ),
         ),
         leftTitles: AxisTitles(
-          axisNameWidget: const Padding(
-            padding: EdgeInsets.only(top: 0.0),
-            child: Text(
-              'power [kW]',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-            ),
+          axisNameSize: 50,
+          axisNameWidget: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: 50,),
+              Column(
+                children: [
+                  Text(
+                    'Power [kW]',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  SizedBox(height: 25,),
+                ],
+              ),
+              
+            ],
           ),
           sideTitles: SideTitles(
             showTitles: true,
             reservedSize: 40,
             getTitlesWidget: (value, meta) {
               return Text(
-                value.toStringAsFixed(2),
+                value.toInt().toString(),
                 style: const TextStyle(fontSize: 12),
               );
             },
@@ -130,7 +148,12 @@ class SmoothLineChart extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(
+        top: 16.0, 
+        bottom: 16.0,
+        left: 16.0,
+        right: 50.0,
+        ),
       child: AspectRatio(aspectRatio: 1.7, child: LineChart(lineChartData)),
     );
   }

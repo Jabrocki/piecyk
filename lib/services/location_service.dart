@@ -132,6 +132,7 @@ class LocationService {
     _isManuallySet = true;
     
     logger.d("=== location manually set to: lat=$latitude, lon=$longitude ===\\\\n");
+    
   }
 
   // Method to try to extract coordinates from an address string
