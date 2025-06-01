@@ -10,6 +10,7 @@ import 'package:piecyk/widgets/title_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
+import 'package:piecyk/widgets/select_date.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -50,8 +51,8 @@ class _MainPageState extends State<MainPage> {
             footer: FBottomNavigationBar(children: const []),
             sidebar: const MainSidebar(),
             child: Center(
-              child: Center(
-                child: Row(
+              child: Column(children: [
+                Row(
                   children: <Widget>[
                     SizedBox(width: 50),
                     Expanded(child: DeviceInfoCollumn()),
@@ -60,7 +61,8 @@ class _MainPageState extends State<MainPage> {
                     SizedBox(width: 50),
                   ],
                 ),
-              ),
+                SelectDate(),
+              ],),
             ),
           ),
         ),
