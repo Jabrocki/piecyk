@@ -39,12 +39,12 @@ class _LoopingTextGradientAnimationState extends State<LoopingTextGradientAnimat
     _gradientColorAnimation1 = TweenSequence<Color?>(
       [
         TweenSequenceItem(
-          tween: ColorTween(begin: Colors.green, end: widget.finalGradientColor), // Changed end color
-          weight: 50.0,
+          tween: ColorTween(begin: Colors.green, end: widget.finalGradientColor),
+          weight: 50.0, // Forward animation
         ),
         TweenSequenceItem(
-          tween: ColorTween(begin: widget.finalGradientColor, end: Colors.green), // Changed to loop back
-          weight: 50.0,
+          tween: ColorTween(begin: widget.finalGradientColor, end: Colors.green),
+          weight: 50.0, // Backward animation
         ),
       ],
     ).animate(_controller);
@@ -52,12 +52,12 @@ class _LoopingTextGradientAnimationState extends State<LoopingTextGradientAnimat
     _gradientColorAnimation2 = TweenSequence<Color?>(
       [
         TweenSequenceItem(
-          tween: ColorTween(begin: Colors.yellow, end: Colors.green), // Changed end color
-          weight: 50.0,
+          tween: ColorTween(begin: Colors.yellow, end: Colors.green),
+          weight: 50.0, // Forward animation
         ),
         TweenSequenceItem(
-          tween: ColorTween(begin: Colors.green, end: Colors.yellow), // Changed to loop back
-          weight: 50.0,
+          tween: ColorTween(begin: Colors.green, end: Colors.yellow),
+          weight: 50.0, // Backward animation
         ),
       ],
     ).animate(_controller);
