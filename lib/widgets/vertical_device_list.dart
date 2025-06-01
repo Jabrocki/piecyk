@@ -43,13 +43,18 @@ class VerticalDeviceList extends StatelessWidget {
   }
 }
 
-class CustomPortal extends StatelessWidget {
-  CustomPortal({super.key});
+class CustomPortal extends StatefulWidget {
+  const CustomPortal({super.key});
 
+  @override
+  State<CustomPortal> createState() => _CustomPortalState();
+}
+
+class _CustomPortalState extends State<CustomPortal> {
   final controllerPortal = OverlayPortalController();
   final double _textSpacing = 4;
 
-  //Text controllers
+  // Text controllers
   final nameController = TextEditingController();
   final panelPowerController = TextEditingController();
   final panelNumberController = TextEditingController();
@@ -57,18 +62,77 @@ class CustomPortal extends StatelessWidget {
   final tiltController = TextEditingController();
   final azimuthController = TextEditingController();
 
-  Future _addInstaltion() async {
-    addInstallationData(
-      name: nameController.text, 
-      panelPower: panelPowerController.text, 
-      panelNumber: panelNumberController.text, 
-      maximumVoltage: maximumVoltageController.text, 
-      tilt: tiltController.text, 
-      azimuth: azimuthController.text
-    );
-    controllerPortal.toggle();
+  // Title color states for each field
+  Color nameTitleColor = Colors.black;
+  Color panelPowerTitleColor = Colors.black;
+  Color panelNumberTitleColor = Colors.black;
+  Color maximumVoltageTitleColor = Colors.black;
+  Color tiltTitleColor = Colors.black;
+  Color azimuthTitleColor = Colors.black;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to revert all title colors to black when typing in any field
+    nameController.addListener(_revertAllTitleColors);
+    panelPowerController.addListener(_revertAllTitleColors);
+    panelNumberController.addListener(_revertAllTitleColors);
+    maximumVoltageController.addListener(_revertAllTitleColors);
+    tiltController.addListener(_revertAllTitleColors);
+    azimuthController.addListener(_revertAllTitleColors);
   }
 
+  void _revertAllTitleColors() {
+    setState(() {
+      nameTitleColor = Colors.black;
+      panelPowerTitleColor = Colors.black;
+      panelNumberTitleColor = Colors.black;
+      maximumVoltageTitleColor = Colors.black;
+      tiltTitleColor = Colors.black;
+      azimuthTitleColor = Colors.black;
+    });
+  }
+
+  Future<void> _addInstaltion() async {
+    setState(() {
+      // Validate all fields and update title colors
+      nameTitleColor = nameController.text.isNotEmpty ? Colors.black : Colors.red;
+      panelPowerTitleColor = panelPowerController.text.isNotEmpty ? Colors.black : Colors.red;
+      panelNumberTitleColor = panelNumberController.text.isNotEmpty ? Colors.black : Colors.red;
+      maximumVoltageTitleColor = maximumVoltageController.text.isNotEmpty ? Colors.black : Colors.red;
+      tiltTitleColor = tiltController.text.isNotEmpty ? Colors.black : Colors.red;
+      azimuthTitleColor = azimuthController.text.isNotEmpty ? Colors.black : Colors.red;
+    });
+
+    // Check if any field is invalid
+    if ([nameTitleColor, panelPowerTitleColor, panelNumberTitleColor, maximumVoltageTitleColor, tiltTitleColor, azimuthTitleColor].contains(Colors.red)) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill in all fields")));
+      return; // Exit the function if validation fails
+    }
+
+    // Add installation data
+    await addInstallationData(
+      name: nameController.text,
+      panelPower: panelPowerController.text,
+      panelNumber: panelNumberController.text,
+      maximumVoltage: maximumVoltageController.text,
+      tilt: tiltController.text,
+      azimuth: azimuthController.text,
+    );
+
+    // Clear text controllers
+    nameController.clear();
+    panelPowerController.clear();
+    panelNumberController.clear();
+    maximumVoltageController.clear();
+    tiltController.clear();
+    azimuthController.clear();
+
+    // Reset title colors
+    _revertAllTitleColors();
+
+    controllerPortal.toggle();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,54 +153,39 @@ class CustomPortal extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                        children: [
+                        children: const [
                           Icon(FIcons.plug),
+                          SizedBox(width: 8),
                           Text(
                             "Instalation",
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                     ),
-                    _buildTextField("Instaltion name", nameController, "text"),
-                    _buildTextField("Panel Power [kW]", panelPowerController, "decimal"),
-                    _buildTextField("Number of panels", panelNumberController, "integer"),
-                    _buildTextField("Maximum Voltage [V]", maximumVoltageController, "decimal"),
-                    _buildTextField("Tilt [degrees]", tiltController, "decimal"),
-                    _buildTextField("Azimuth [degrees]", azimuthController, "decimal"),
-                    SizedBox(height: _textSpacing),
+                    _buildTextField("Instaltion name", nameController, "text", nameTitleColor),
+                    _buildTextField("Panel Power [kW]", panelPowerController, "decimal", panelPowerTitleColor),
+                    _buildTextField("Number of panels", panelNumberController, "integer", panelNumberTitleColor),
+                    _buildTextField("Maximum Voltage [V]", maximumVoltageController, "decimal", maximumVoltageTitleColor),
+                    _buildTextField("Tilt [degrees]", tiltController, "decimal", tiltTitleColor),
+                    _buildTextField("Azimuth [degrees]", azimuthController, "decimal", azimuthTitleColor),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: FButton(
-                        onPress: () {
-                          _addInstaltion();
-                        }, 
-                        child: Text("Add")
-                      ),
+                      child: FButton(onPress: _addInstaltion, child: const Text("Add")),
                     ),
                   ],
                 ),
               ),
             ),
             child: FButton(
-              onPress: () {
-                controllerPortal.toggle();
-              },
+              onPress: controllerPortal.toggle,
               child: Row(
-                children: [
-                  const Icon(FIcons.zap),
-                  const SizedBox(width: 10),
-                  const Text('Add Instalation'),
-                ],
+                children: const [Icon(FIcons.zap), SizedBox(width: 10), Text('Add Instalation')],
               ),
             ),
           );
@@ -145,35 +194,26 @@ class CustomPortal extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(
-    String label,
-    TextEditingController controller,
-    String fieldType
-  ) {
+  Widget _buildTextField(String label, TextEditingController controller, String fieldType, Color titleColor) {
     final List<TextInputFormatter> inputFormatters = fieldType == "integer"
-      ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
-      : fieldType == "decimal"
-        ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
-        : <TextInputFormatter>[];
-    return Column(
-      children: [
-        SizedBox(height: _textSpacing),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FTextField(
-            controller: controller,
-            label: Text(label),
-            inputFormatters: inputFormatters,
-          ),
-        ),
-      ],
+        ? [FilteringTextInputFormatter.digitsOnly] // Allow only integers
+        : fieldType == "text"
+            ? [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))] // Allow only letters and spaces
+            : [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]; // Allow only decimals
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FTextField(
+        controller: controller,
+        label: Text(label, style: TextStyle(color: titleColor)),
+        inputFormatters: inputFormatters,
+      ),
     );
   }
 }
 
 class _HoverableListTile extends StatefulWidget {
   final Map<String, dynamic> doc;
-  const _HoverableListTile({Key? key, required this.doc}) : super(key: key);
+  const _HoverableListTile({super.key, required this.doc});
 
   @override
   State<_HoverableListTile> createState() => _HoverableListTileState();
@@ -184,85 +224,65 @@ class _HoverableListTileState extends State<_HoverableListTile> {
 
   @override
   Widget build(BuildContext context) {
-    final double scaleFactor = _hovering ? 1.1 : 1.0;
-    final EdgeInsets margin = _hovering
-        ? EdgeInsets.zero
-        : EdgeInsets.symmetric(horizontal: 8, vertical: 4);
     return MouseRegion(
-      onEnter: (_) => setState(() { _hovering = true; }),
-      onExit: (_) => setState(() { _hovering = false; }),
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        margin: margin,
-        transform: Matrix4.identity()..scale(scaleFactor),
-        transformAlignment: Alignment.center,
+        duration: const Duration(milliseconds: 200),
+        margin: EdgeInsets.symmetric(horizontal: _hovering ? 4 : 8, vertical: _hovering ? 2 : 4),
         child: Card(
-          margin: EdgeInsets.zero,
           elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: ExpansionTile(
-            childrenPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            // Title now includes name and delete button.
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    '${widget.doc['name']}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              dividerColor: Colors.transparent, // Removes divider lines
+              highlightColor: Colors.transparent, // Prevents color change on tap
+              splashColor: Colors.transparent, // Prevents ripple effect on tap
+              hoverColor: Colors.transparent, // Prevents color change on hover
+            ),
+            child: ExpansionTile(
+              leading: const Icon(FIcons.housePlug),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              collapsedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              backgroundColor: Colors.transparent, // No background color
+              tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      widget.doc['name'],
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () async {
-                    await removeInstallationData(widget.doc['docId']);
-                  },
-                ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () async => await removeInstallationData(widget.doc['docId']),
+                  ),
+                ],
+              ),
+              children: [
+                _buildInfoRow(FIcons.plugZap, 'Power', '${widget.doc['panelPower']} kW'),
+                _buildInfoRow(FIcons.columns3, 'Panels', '${widget.doc['panelNumber']}'),
+                _buildInfoRow(FIcons.zap, 'Voltage', '${widget.doc['maximumVoltage']} V'),
+                _buildInfoRow(FIcons.arrowRight, 'Tilt', '${widget.doc['tilt']}°'),
+                _buildInfoRow(FIcons.compass, 'Azimuth', '${widget.doc['azimuth']}°'),
               ],
             ),
-            // Additional information is moved into the children.
-            children: [
-              Row(
-                children: [
-                  Icon(FIcons.plugZap, size: 16),
-                  SizedBox(width: 4),
-                  Text('Power: ${widget.doc['panelPower']} kW', style: TextStyle(fontSize: 12)),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(FIcons.columns3, size: 16),
-                  SizedBox(width: 4),
-                  Text('Panels: ${widget.doc['panelNumber']}', style: TextStyle(fontSize: 12)),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(FIcons.zap, size: 16),
-                  SizedBox(width: 4),
-                  Text('Voltage: ${widget.doc['maximumVoltage']} V', style: TextStyle(fontSize: 12)),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(FIcons.arrowRight, size: 16),
-                  SizedBox(width: 4),
-                  Text('Tilt: ${widget.doc['tilt']}°', style: TextStyle(fontSize: 12)),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(FIcons.compass, size: 16),
-                  SizedBox(width: 4),
-                  Text('Azimuth: ${widget.doc['azimuth']}°', style: TextStyle(fontSize: 12)),
-                ],
-              ),
-            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String label, String value) {
+    return Row(
+      children: [
+        Icon(icon, size: 16),
+        const SizedBox(width: 4),
+        Text('$label: $value', style: const TextStyle(fontSize: 12)),
+      ],
     );
   }
 }
