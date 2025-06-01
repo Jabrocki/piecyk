@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:piecyk/widgets/analyze_button.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/main_state.dart';
 import 'package:piecyk/providers/weather_state.dart';
@@ -119,6 +120,7 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
                 ],
               ),
             ),
+            AnalyzeButton(),
           ],
         ),
       ),
