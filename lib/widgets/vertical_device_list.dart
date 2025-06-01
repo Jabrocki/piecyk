@@ -274,6 +274,7 @@ class _CustomPortalState extends State<CustomPortal> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: FTextField(
+        inputFormatters: inputFormatters,
         controller: controller,
         label: Text(label, style: TextStyle(color: hasError ? themeColors.destructive : themeColors.mutedForeground)), // Use mutedForeground for label
         // FTextField text color should be handled by its style or default to foreground
@@ -308,27 +309,30 @@ class _HoverableListTileState extends State<_HoverableListTile> {
         ),
         child: Card(
           elevation: 4,
-          color: _hovering ? themeColors.secondary.withOpacity(0.1) : themeColors.background, // Subtle hover, theme background
+          color: themeColors.background, // Static color, hover effect from AnimatedContainer margins
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(color: themeColors.border), // Theme border
           ),
           child: Theme( // Keep this Theme to override specific Material defaults if needed
             data: Theme.of(context).copyWith(
-              dividerColor: Colors.transparent,
+              dividerColor: themeColors.background, // Keep or set to Colors.transparent if no dividers needed
+              focusColor: Colors.transparent,
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
               hoverColor: Colors.transparent,
             ),
             child: ExpansionTile(
+              collapsedBackgroundColor: themeColors.background, // Ensure collapsed header background
               leading: Icon(FIcons.housePlug, color: themeColors.primary), // Use primary color for leading icon
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
+              dense: false,
               collapsedShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              backgroundColor: Colors.transparent,
+              backgroundColor: themeColors.background, // Changed from Colors.transparent
               tilePadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
