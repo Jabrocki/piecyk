@@ -75,7 +75,7 @@ class _MainSidebarState extends State<MainSidebar> {
                         ),
                         FSidebarItem(
                           icon: const Icon(FIcons.settings),
-                          label: showLabels ? const Text('Settings') : null,
+                          label: showLabels ? const Text('Information') : null,
                           onPress: () {},
                         ),
                       ],

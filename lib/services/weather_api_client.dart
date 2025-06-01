@@ -17,12 +17,16 @@ class WeatherApiClient {
   }) : httpClient = httpClient ?? http.Client();
 
   // TEMPORARILY fixed values of {start,end}date and parameters in json
+
+  static DateTime startDateTime = DateTime.now().subtract(const Duration(days: 36));
+  static DateTime endDateTime = DateTime.now().subtract(const Duration(days: 6));
+
   static String startDate = DateFormat(
     'yyyy-MM-dd',
-  ).format(DateTime.now().subtract(const Duration(days: 36)));
+  ).format(startDateTime);
   static String endDate = DateFormat(
     'yyyy-MM-dd',
-  ).format(DateTime.now().subtract(const Duration(days: 6)));
+  ).format(endDateTime);
   // date setters
   static set setStartDate(String value) {
     startDate = value;

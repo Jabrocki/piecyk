@@ -45,7 +45,25 @@ class chartAndInfoVertical extends StatelessWidget {
                 values: cumulativeHourlyProduction,
               ),
             ),
-            SelectDate(),
+            Row(
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: SelectDate()
+                  ),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 2,
+                  child: FButton(
+                    onPress: () async {
+                      await context.read<MainState>().loadWeatherForCurrentLocation();
+                    },
+                    child: Icon(FIcons.rotateCcw),
+                  ),
+                ),
+                const SizedBox(width: 14),
+              ],
+            ),
           ],
         ),
       );

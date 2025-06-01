@@ -19,16 +19,12 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
     super.initState();
     _startDateController = FDateFieldController(
       vsync: this,
-      initialDate: DateTime.now().subtract(
-        const Duration(days: 36),
-      ), // Domyślna data początkowa
+      initialDate: WeatherApiClient.startDateTime,
       validator: _validateStartDate,
     );
     _endDateController = FDateFieldController(
       vsync: this,
-      initialDate: DateTime.now().subtract(
-        const Duration(days: 6),
-      ), // Domyślna data końcowa
+      initialDate: WeatherApiClient.endDateTime,
       validator: _validateEndDate,
     );
   }
@@ -86,6 +82,7 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
             if (selected != null) {
               setState(() {
                 WeatherApiClient.startDate = _formatDate(selected);
+                WeatherApiClient.startDateTime = selected;
               });
               //context.read<MainState>().startDate = _formatDate(selected);
             }
@@ -107,6 +104,7 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
             if (selected != null) {
               setState(() {
                 WeatherApiClient.endDate = _formatDate(selected);
+                WeatherApiClient.endDateTime = selected;
               });
               //context.read<MainState>().endDate = _formatDate(selected);
             }
