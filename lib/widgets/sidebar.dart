@@ -3,6 +3,7 @@ import 'package:forui/forui.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 
+
 class MainSidebar extends StatefulWidget {
   final Function(bool)? onDownloadDataPressed; // Optional callback to trigger menu visibility
 
@@ -44,15 +45,6 @@ class _MainSidebarState extends State<MainSidebar> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // if (showLabels) ...[
-                        //   Text(
-                        //     'Menu', // <-- your title (napis)
-                        //     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        //           fontWeight: FontWeight.bold,
-                        //           letterSpacing: 1.2,
-                        //         ),
-                        //   ),
-                        // ],
                         const SizedBox(height: 20),
                         Container(
                           height: 1,
