@@ -25,15 +25,14 @@ class MainState extends ChangeNotifier {
     watchInstallationData().listen((dataList) {
       print('Received installations: $dataList');
       installations = dataList.map((data) {
-        // Parse Firestore data to Installation and Panel
         final panel = Panel(
           powerWatts: data['panelPower'] ?? 0.0,
           maxVoltage: data['maximumVoltage'] ?? 0.0,
           tiltAngleDegrees: data['tilt'] ?? 0.0,
-          efficiencySTC: 0.18, // or parse if stored
-          areaM2: 2, // or parse if stored
-          noct: 25, // or parse if stored
-          temperatureCoeff: 0.004, // or parse if stored
+          efficiencySTC: 0.18,
+          areaM2: 2,
+          noct: 25,
+          temperatureCoeff: 0.004,
         );
         return Installation(
           panel: panel,
@@ -52,12 +51,10 @@ class MainState extends ChangeNotifier {
       state = WeatherLoading();
       notifyListeners();
 
-      // First make sure we have a location
       try {
         await locationService.determinePosition();
       } catch (locationError) {
         logger.e("=== error determining location: $locationError ===\n");
-        // Continue with the weather fetch - it will try to get location again if needed
       }
 
       final weather = await weatherRepo.getWeatherForCurrentLocation();
@@ -74,14 +71,13 @@ class MainState extends ChangeNotifier {
     try {
       logger.d("=== updating address: $address ===\\n");
 
-      // Set loading state to indicate something is happening
       state = WeatherLoading();
       notifyListeners();
 
-      // Update location from address - this should handle city names or coordinates
+      
       await locationService.updateLocationFromAddress(address);
 
-      // After updating location, simply load weather for the current location
+      
       final weather = await weatherRepo.getWeatherForCurrentLocation();
       logger.d("=== successfully fetched weather after location update ===\\n");
       state = WeatherSuccess(weather);
@@ -100,14 +96,14 @@ class MainState extends ChangeNotifier {
     try {
       logger.d("=== updating coordinates: lat=$latitude, lon=$longitude ===\n");
 
-      // Set loading state while we update coordinates
+      
       state = WeatherLoading();
       notifyListeners();
 
-      // Update coordinates directly - this should always succeed
+      
       locationService.updateLocationFromCoordinates(latitude, longitude);
 
-      // Get weather for the new coordinates
+      
       try {
         final weather = await weatherRepo.getWeatherForCurrentLocation();
         logger.d(
@@ -131,7 +127,7 @@ class MainState extends ChangeNotifier {
     }
   }
 
-  /// Zwraca produkcję energii dla pierwszej instalacji z listy (jeśli istnieje)
+  // Zwraca produkcję energii dla pierwszej instalacji z listy (jeśli istnieje)
   List<double> calculateProduction(WeatherModel weather) {
     if (installations.isNotEmpty) {
       return installations.first.calculateHourlyProduction(weather);
