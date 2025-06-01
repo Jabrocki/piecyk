@@ -74,9 +74,38 @@ class _MainSidebarState extends State<MainSidebar> {
                           },
                         ),
                         FSidebarItem(
-                          icon: const Icon(FIcons.settings),
+                          icon: const Icon(FIcons.info),
                           label: showLabels ? const Text('Information') : null,
-                          onPress: () {},
+                          initiallyExpanded: true,
+                          children: [
+                            FSidebarItem(
+                              icon: const Icon(FIcons.flame),
+                              label: showLabels ? const Text('Piec Koksowniczy') : null,
+                              initiallyExpanded: true,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                                  child: Text('Bartłomiej Pietrzak', style: TextStyle(fontSize: 15)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                                  child: Text('Bartosz Pajor', style: TextStyle(fontSize: 15)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                                  child: Text('Franciszek Razny', style: TextStyle(fontSize: 15)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                                  child: Text('Jan Jabrocki', style: TextStyle(fontSize: 15)),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                                  child: Text('Kosciuszkon 2025', style: TextStyle(fontSize: 15)),
+                                ),
+                          ],
                         ),
                       ],
                     ),
