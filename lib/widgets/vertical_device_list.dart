@@ -114,9 +114,6 @@ class _CustomPortalState extends State<CustomPortal> {
         maximumVoltageHasError ||
         tiltHasError ||
         azimuthHasError) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill in all fields")),
-      );
       return; // Exit the function if validation fails
     }
 
@@ -189,7 +186,7 @@ class _CustomPortalState extends State<CustomPortal> {
                       ),
                     ),
                     _buildTextField(
-                      "Instaltion name",
+                      "Instalation name",
                       nameController,
                       "text",
                       nameHasError,
