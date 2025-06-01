@@ -23,6 +23,8 @@ dependencies:
   intl: ^0.20.2
   fl_chart: ^1.0.0
   firebase_auth: ^5.5.4
+  geocoding: ^4.0.0
+  geocode: ^1.0.3
 
 dev_dependencies:
   flutter_test:

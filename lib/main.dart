@@ -52,7 +52,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) =>
-              MainState(weatherRepo: weatherRepository, logger: logger),
+              MainState(weatherRepo: weatherRepository, locationService: locationService, logger: logger), // Added locationService
         ),
         ChangeNotifierProvider(create: (_) => LoginState()),
         ChangeNotifierProvider(
