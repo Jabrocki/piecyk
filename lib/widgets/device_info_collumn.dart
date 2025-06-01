@@ -73,7 +73,7 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
     return SizedBox(
       width: double.infinity, // Take full width
       height: double.infinity, // Take full height
-      child: Column( children: [DecoratedBox(
+      child: SingleChildScrollView( child :Column (children: [DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(color: context.theme.colors.border),
           borderRadius: BorderRadius.circular(8),
@@ -144,7 +144,7 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
       
       ),
 
-    );
+    ));
   }
 }
 
