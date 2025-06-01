@@ -36,9 +36,7 @@ class _MainPageState extends State<MainPage> {
         final longitude = locationData['longitude'] as double?;
         if (latitude != null && longitude != null) {
           context
-              .read<MainState>()
-              .locationService
-              .updateLocationFromCoordinates(latitude, longitude);
+              .read<MainState>().updateCoordinatesAndFetchWeather(latitude, longitude);
         }
       } else {
         // If no document exists, call loadWeatherForCurrentLocation
