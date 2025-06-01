@@ -5,6 +5,7 @@ import 'package:piecyk/providers/main_state.dart';
 import 'package:piecyk/providers/weather_state.dart';
 import 'package:provider/provider.dart';
 import 'smooth_line_chart.dart';
+import 'select_date.dart';
 // ... other imports
 
 class chartAndInfoVertical extends StatelessWidget {
@@ -42,6 +43,7 @@ class chartAndInfoVertical extends StatelessWidget {
               ),
               child: SmoothLineChart(values: cumulativeHourlyProduction),
             ),
+            SelectDate(),
           ],
         ),
       );
