@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 import 'package:piecyk/providers/toggle_menu_state.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
+import '../services/firestore/location.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -25,7 +26,21 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     // Ensure the location is determined and then load weather
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<MainState>().loadWeatherForCurrentLocation();
+      final locationData = await downloadLocationData();
+      if (locationData != null) {
+        // Update location in LocationService using Firestore data
+        final latitude = locationData['latitude'] as double?;
+        final longitude = locationData['longitude'] as double?;
+        if (latitude != null && longitude != null) {
+          context
+              .read<MainState>()
+              .locationService
+              .updateLocationFromCoordinates(latitude, longitude);
+        }
+      } else {
+        // If no document exists, call loadWeatherForCurrentLocation
+        await context.read<MainState>().loadWeatherForCurrentLocation();
+      }
     });
     context.read<MainState>().listenToInstallations();
   }
@@ -52,7 +67,6 @@ class _MainPageState extends State<MainPage> {
             scaffoldStyle: generalStyle(colors: currentFColors, style: style),
             header: const FHeader(title: TitleWidget()),
             childPad: true,
-            footer: FBottomNavigationBar(children: const []),
             sidebar: MainSidebar(
               onDownloadDataPressed: (_) => toggleMenuState.toggleMenu(),
             ),
@@ -77,24 +91,60 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(
+                    milliseconds: 500,
+                  ), // Increased duration for smoother animation
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                        return FadeTransition(
+                          opacity: animation, // Add fading effect
+                          child: child,
+                        );
+                      },
                   child: toggleMenuState.isMenuVisible
                       ? Positioned(
                           right: 0,
                           top: 0,
                           bottom: 0,
                           width: 300,
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                const Text('Expandable Menu'),
-                                // Add menu content here
-                              ],
+                          child: SizedBox(
+                            width: 400,
+                            height: 200,
+                            child: FCard(
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(height: 30),
+                                    FButton(
+                                      onPress: () {},
+                                      child: Row(
+                                        children: [
+                                          Icon(FIcons.cable),
+                                          SizedBox(width: 10),
+                                          Text("Download Instalation Data"),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    FButton(
+                                      onPress: () {},
+                                      child: Row(
+                                        children: [
+                                          Icon(FIcons.chartLine),
+                                          SizedBox(width: 10),
+                                          Text("Download Forecasting"),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         )
-                      : const SizedBox.shrink(),
+                      : const SizedBox(),
                 ),
               ],
             ),
