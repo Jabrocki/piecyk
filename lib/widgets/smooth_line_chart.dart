@@ -17,7 +17,7 @@ class SmoothLineChart extends StatelessWidget {
     // Downsample data for chart
     final List<FlSpot> spots = [
       for (int i = 0; i < values.length; i += step)
-        FlSpot(i.toDouble(), values[i]),
+        FlSpot(i.toDouble(), values[i].toInt().toDouble()),
     ];
 
     // For axis scaling, use only the displayed points
