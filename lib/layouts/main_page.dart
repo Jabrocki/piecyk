@@ -9,6 +9,7 @@ import 'package:piecyk/widgets/main_page_resizable.dart';
 import 'package:piecyk/widgets/title_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
+import 'package:piecyk/providers/toggle_menu_state.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
 import 'package:piecyk/widgets/select_date.dart';
 
@@ -33,6 +34,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final toggleMenuState = Provider.of<ToggleMenuState>(context);
     // Determine which FColors to use based on the current theme.
     final FColors currentFColors = themeProvider.isDarkMode
         ? darkFColors
@@ -52,6 +54,7 @@ class _MainPageState extends State<MainPage> {
             header: const FHeader(title: TitleWidget()),
             childPad: true,
             footer: FBottomNavigationBar(children: const []),
+<<<<<<< HEAD
             sidebar: const MainSidebar(),
             child: Center(
               child: Padding(
@@ -76,10 +79,56 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
               ),
+=======
+            sidebar: MainSidebar(
+              onDownloadDataPressed: (_) => toggleMenuState.toggleMenu(),
+>>>>>>> 016c7fd41705e2d159abcfd288a460fb85876f83
             ),
+            child: Stack(
+              children: [
+                Center(
+                  child: Column(
+                    children: <Widget>[
+                      LocationChanger(),
+                      Expanded(
+                        child: Row(
+                          children: <Widget>[
+                            const SizedBox(width: 10),
+                            Expanded(child: DeviceInfoCollumn()),
+                            const SizedBox(width: 15),
+                            Expanded(child: chartAndInfoVertical()),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: toggleMenuState.isMenuVisible
+                      ? Positioned(
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          width: 300,
+                          child: Container(
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                const Text('Expandable Menu'),
+                                // Add menu content here
+                              ],
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
           ),
         ),
       ),
+    ),
     );
   }
 }

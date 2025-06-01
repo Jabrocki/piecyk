@@ -41,7 +41,9 @@ class chartAndInfoVertical extends StatelessWidget {
                 left: 10.0,
                 right: 10.0,
               ),
-              child: SmoothLineChart(values: cumulativeHourlyProduction),
+              child: SmoothLineChart(
+                values: cumulativeHourlyProduction,
+              ),
             ),
             SelectDate(),
           ],
