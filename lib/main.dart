@@ -76,6 +76,7 @@ class MyApp extends StatelessWidget {
       context,
     ); // Access ThemeProvider
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Piecyk',
       theme: themeProvider.themeData, // Use theme from ThemeProvider
       // theme: ThemeData(  // Removed old theme
