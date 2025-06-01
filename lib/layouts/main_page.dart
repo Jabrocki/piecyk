@@ -79,19 +79,30 @@ class _MainPageState extends State<MainPage> {
                   duration: const Duration(milliseconds: 300),
                   child: toggleMenuState.isMenuVisible
                       ? Positioned(
-                          right: 0,
+                          right: 5,
                           top: 0,
                           bottom: 0,
                           width: 300,
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                const Text('Expandable Menu'),
-                                // Add menu content here
-                              ],
+                          //height: 300,
+                          child: SizedBox(
+                            width: 300,
+                            height: 300,
+                            child: FCard(
+                              child: Column(
+                               children: [
+                                FButton(
+                                  onPress: () {},
+                                  child: Text("Download Instalations Info"),
+                                ),
+                                SizedBox(height: 10,),
+                                FButton(
+                                  onPress: () {}, 
+                                  child: Text("Downlad predictions")
+                                )
+                                ]
+                              ),
                             ),
-                          ),
+                          )
                         )
                       : const SizedBox.shrink(),
                 ),
