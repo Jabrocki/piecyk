@@ -128,7 +128,7 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
                     ),
                   ),
                   Text(
-                    'Maximum energy produces in day: ${maxEnergyProducesInDay.toStringAsFixed(2)} [kWh]',
+                    'Maximum energy produced in a day: ${maxEnergyProducesInDay.toStringAsFixed(2)} [kWh]',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
