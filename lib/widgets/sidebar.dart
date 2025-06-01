@@ -63,12 +63,11 @@ class _MainSidebarState extends State<MainSidebar> {
                         FSidebarItem(
                           icon: const Icon(FIcons.layoutDashboard),
                           label: showLabels ? const Text('Dashboard') : null,
-                          selected: true,
                           onPress: () {},
                         ),
                         FSidebarItem(
-                          icon: const Icon(FIcons.network),
-                          label: showLabels ? const Text('Devices') : null,
+                          icon: const Icon(FIcons.download),
+                          label: showLabels ? const Text('Download Data') : null,
                           onPress: () {},
                         ),
                         FSidebarItem(
