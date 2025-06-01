@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart'; // Import FTextField and FButton
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/main_state.dart';
+import 'package:piecyk/services/firestore/location.dart';
 
 class LocationChanger extends StatefulWidget {
   const LocationChanger({super.key});
@@ -13,10 +14,16 @@ class LocationChanger extends StatefulWidget {
 class _LocationChangerState extends State<LocationChanger> {
   final TextEditingController _addressController = TextEditingController();
 
-  void _submitAddress() {
+  void _submitAddress() async {
     final String address = _addressController.text.trim();
     if (address.isNotEmpty) {
-      context.read<MainState>().updateAddressAndFetchWeather(address);
+      await context.read<MainState>().updateAddressAndFetchWeather(address);
+
+      // Update Firestore location document
+      final location = context.read<MainState>().locationService.currentPosition;
+      if (location != null) {
+        await initOrUpdateLocation(location.latitude, location.longitude);
+      }
     }
   }
 
