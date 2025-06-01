@@ -55,7 +55,7 @@ W SUNSEER skupiliśmy się na **prostocie** i **skuteczności** – chcemy, aby 
 ---
 
 ## 4. Struktura kodu
-
+```bash
 /projekt
 ├── lib
 │ ├── animations # Animacje wykorzystywane w aplikacji
@@ -68,7 +68,7 @@ W SUNSEER skupiliśmy się na **prostocie** i **skuteczności** – chcemy, aby 
 │ ├── widgets # Komponenty UI używane w różnych ekranach
 │ └── main.dart # Punkt wejścia – uruchomienie aplikacji
 └── README.md # Ta dokumentacja
-
+```
 
 ---
 
