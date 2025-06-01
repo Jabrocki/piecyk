@@ -18,7 +18,10 @@ class TitleWidget extends StatelessWidget {
     final colors = FTheme.of(context).colors;
     final isDarkMode = colors.brightness == Brightness.dark;
 
-    return Row(
+    return 
+      Padding(
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+        child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         TextGradientAnimation(
@@ -38,6 +41,7 @@ class TitleWidget extends StatelessWidget {
         ),
         FTappable(onPress: logOut, child: Icon(FIcons.logOut)),
       ],
+        ),
     );
   }
 }

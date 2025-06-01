@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/widgets/vertical_device_list.dart';
+import 'location_changer.dart';
 
 class DeviceInfoCollumn extends StatelessWidget {
   const DeviceInfoCollumn({super.key});
@@ -15,7 +16,11 @@ class DeviceInfoCollumn extends StatelessWidget {
           border: Border.all(color: context.theme.colors.border),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: VerticalDeviceList(), // Only VerticalDeviceList remains
+        child: Column(
+          children: <Widget>[
+            VerticalDeviceList(), // Moved VerticalDeviceList inside children
+          ],
+        ),
       ),
     );
   }
