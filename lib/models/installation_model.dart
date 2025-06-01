@@ -112,8 +112,19 @@ class Installation {
     return hourlyEnergyKwh;
   }
 
+  // zwraca listę częściowych sum (do wykresu)
+  List<double> cumulativeSum(List<double> input) {
+    final List<double> result = List<double>.filled(input.length, 0.0);
+    double sum = 0.0;
+    for (int i = 0; i < input.length; i++) {
+      sum += input[i];
+      result[i] = sum;
+    }
+    return result;
+  }
+
   /// Sumuje listę godzinowych energii kWh i zwraca łączny roczny/miesięczny/etc. uzysk.
-  double sumAnnualEnergy(List<double> hourlyEnergyKwh) {
+  double sumTotalEnergy(List<double> hourlyEnergyKwh) {
     return hourlyEnergyKwh.fold(0.0, (sum, e) => sum + e);
   }
 

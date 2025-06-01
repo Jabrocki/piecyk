@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(FIcons.sun, size: 400),
+                Image.asset("../../resources/logo.png", width: 300, height: 300),
                 const SizedBox(height: 24),
                 Text('Welcome Back!', textAlign: TextAlign.center),
                 const SizedBox(height: 12),

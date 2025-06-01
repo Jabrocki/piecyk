@@ -18,6 +18,7 @@ final FColors lightFColors = FColors(
   error: Colors.red.shade700,
   errorForeground: Colors.white,
   border: Colors.grey.shade300,
+  
   // enabledHoveredOpacity and disabledOpacity will use default values from FColors constructor
 );
 

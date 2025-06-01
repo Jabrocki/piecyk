@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:forui/forui.dart';
+import 'package:piecyk/models/weather_model.dart';
 import 'package:piecyk/providers/main_state.dart';
 import 'package:piecyk/theme/general_style.dart';
 import 'package:piecyk/widgets/device_info_collumn.dart';
@@ -28,10 +29,16 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mainState = Provider.of<MainState>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    // final mainStateProvider = Provider.of<MainState>(context);
     // Determine which FColors to use based on the current theme.
-    final FColors currentFColors = themeProvider.isDarkMode ? darkFColors : lightFColors;
-    final FStyle style = FTheme.of(context).style; // Assuming FStyle doesn't need to change or is handled elsewhere.
+    final FColors currentFColors = themeProvider.isDarkMode
+        ? darkFColors
+        : lightFColors;
+    final FStyle style = FTheme.of(
+      context,
+    ).style; // Assuming FStyle doesn't need to change or is handled elsewhere.
 
     return FTheme(
       data: FThemeData(colors: currentFColors, style: style),
@@ -52,14 +59,18 @@ class _MainPageState extends State<MainPage> {
                     Row(
                       children: <Widget>[
                         SizedBox(width: 50),
-                        Expanded(child: DeviceInfoCollumn()),
-                        SizedBox(width: 50),
-                        Expanded(child: MainPageResizableVertical()),
+                        Column (
+                          children: [
+                            DeviceInfoCollumn(),
+                            SizedBox(width: 50),
+                            SelectDate(),
+
+                          ],
+                        ),
+                        Expanded(child: chartAndInfoVertical()),
                         SizedBox(width: 50),
                       ],
                     ),
-                    const SizedBox(height: 24), // Optional: space between row and SelectDate
-                    SelectDate(), // <-- Add this line
                   ],
                 ),
               ),
@@ -70,3 +81,4 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+// helo
