@@ -53,7 +53,6 @@ class _MainPageState extends State<MainPage> {
             scaffoldStyle: generalStyle(colors: currentFColors, style: style),
             header: const FHeader(title: TitleWidget()),
             childPad: true,
-            footer: FBottomNavigationBar(children: const []),
             sidebar: MainSidebar(
               onDownloadDataPressed: (_) => toggleMenuState.toggleMenu(),
             ),
