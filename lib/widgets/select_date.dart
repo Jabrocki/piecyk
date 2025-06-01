@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:piecyk/models/weather_model.dart';
 import 'package:intl/intl.dart';
-import 'package:piecyk/services/weather_api_client.dart';
 
 class SelectDate extends StatefulWidget {
   const SelectDate({super.key});
@@ -49,7 +47,8 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
     if (date.isAfter(DateTime.now())) {
       return 'Data końcowa musi być dzisiaj lub wcześniej';
     }
-    if (_startDateController.value != null && date.isBefore(_startDateController.value!)) {
+    if (_startDateController.value != null &&
+        date.isBefore(_startDateController.value!)) {
       return 'Data końcowa musi być po dacie początkowej';
     }
     return null;
@@ -72,7 +71,8 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
           label: const Text('Start Date'),
           description: const Text('Select a starting date'),
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          prefixBuilder: (context, styles, child) => const Icon(Icons.calendar_today),
+          prefixBuilder: (context, styles, child) =>
+              const Icon(Icons.calendar_today),
           clearable: true,
           onChange: (DateTime? selected) {
             if (selected != null) {
@@ -88,7 +88,8 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
           label: const Text('End Date'),
           description: const Text('Select an ending date'),
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          prefixBuilder: (context, styles, child) => const Icon(Icons.calendar_today),
+          prefixBuilder: (context, styles, child) =>
+              const Icon(Icons.calendar_today),
           clearable: true,
           onChange: (DateTime? selected) {
             if (selected != null) {

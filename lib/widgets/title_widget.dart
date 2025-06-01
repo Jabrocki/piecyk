@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:forui/widgets/button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:forui/forui.dart'; // Import FTheme
+// Import FTheme
 import '../animations/text_gradient_animation.dart';
 
 class TitleWidget extends StatelessWidget {
@@ -27,14 +26,14 @@ class TitleWidget extends StatelessWidget {
             fontSize: 44,
             fontWeight: FontWeight.w900,
             fontStyle: FontStyle.italic,
-        // The color property of TextStyle is used by ShaderMask, but the gradient will override it.
-        // We set it to the theme's foreground color as a fallback or if ShaderMask is disabled.
-        color: colors.foreground,
+            // The color property of TextStyle is used by ShaderMask, but the gradient will override it.
+            // We set it to the theme's foreground color as a fallback or if ShaderMask is disabled.
+            color: colors.foreground,
           ),
-          duration: const Duration(
-            seconds: 3,
-          ),
-      finalGradientColor: isDarkMode ? Colors.white : Colors.black, // Set finalGradientColor based on theme
+          duration: const Duration(seconds: 3),
+          finalGradientColor: isDarkMode
+              ? Colors.white
+              : Colors.black, // Set finalGradientColor based on theme
         ),
         FTappable(onPress: logOut, child: Icon(FIcons.logOut)),
       ],

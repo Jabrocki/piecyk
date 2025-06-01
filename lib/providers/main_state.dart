@@ -12,7 +12,11 @@ class MainState extends ChangeNotifier {
   final WeatherRepository weatherRepo;
   final LocationService locationService;
   final Logger logger;
-  MainState({required this.weatherRepo, required this.locationService, required this.logger});
+  MainState({
+    required this.weatherRepo,
+    required this.locationService,
+    required this.logger,
+  });
   List<Installation> installations = [];
 
   WeatherState state = WeatherDefault();
@@ -69,14 +73,14 @@ class MainState extends ChangeNotifier {
   Future<void> updateAddressAndFetchWeather(String address) async {
     try {
       logger.d("=== updating address: $address ===\\n");
-      
+
       // Set loading state to indicate something is happening
       state = WeatherLoading();
       notifyListeners();
-      
+
       // Update location from address - this should handle city names or coordinates
       await locationService.updateLocationFromAddress(address);
-      
+
       // After updating location, simply load weather for the current location
       final weather = await weatherRepo.getWeatherForCurrentLocation();
       logger.d("=== successfully fetched weather after location update ===\\n");
@@ -89,27 +93,36 @@ class MainState extends ChangeNotifier {
     }
   }
 
-  Future<void> updateCoordinatesAndFetchWeather(double latitude, double longitude) async {
+  Future<void> updateCoordinatesAndFetchWeather(
+    double latitude,
+    double longitude,
+  ) async {
     try {
       logger.d("=== updating coordinates: lat=$latitude, lon=$longitude ===\n");
-      
+
       // Set loading state while we update coordinates
       state = WeatherLoading();
       notifyListeners();
-      
+
       // Update coordinates directly - this should always succeed
       locationService.updateLocationFromCoordinates(latitude, longitude);
-      
+
       // Get weather for the new coordinates
       try {
         final weather = await weatherRepo.getWeatherForCurrentLocation();
-        logger.d("=== successfully fetched weather for updated coordinates ===\n");
+        logger.d(
+          "=== successfully fetched weather for updated coordinates ===\n",
+        );
         state = WeatherSuccess(weather);
       } catch (weatherError) {
-        logger.e("=== error fetching weather after coordinate update: $weatherError ===\n");
-        state = WeatherError("Failed to fetch weather: ${weatherError.toString()}");
+        logger.e(
+          "=== error fetching weather after coordinate update: $weatherError ===\n",
+        );
+        state = WeatherError(
+          "Failed to fetch weather: ${weatherError.toString()}",
+        );
       }
-      
+
       notifyListeners();
     } catch (e) {
       logger.e("=== error in overall coordinate update process: $e ===\n");
@@ -132,5 +145,58 @@ class MainState extends ChangeNotifier {
       return installations.first.cumulativeSum(inputList);
     }
     return [];
+  }
+
+  double calculateSavingsByTariff({
+    required List<WeatherModel>
+    weatherModels, // lista modeli pogodowych dla każdej instalacji
+    required String tariff,
+  }) {
+    if (installations.isEmpty) return 0.0;
+
+    double totalSavings = 0.0;
+
+    // Zakładamy, że weatherModels.length == installations.length
+    for (int idx = 0; idx < installations.length; idx++) {
+      final installation = installations[idx];
+      final weather = weatherModels.length > idx
+          ? weatherModels[idx]
+          : weatherModels.isNotEmpty
+          ? weatherModels.first
+          : null;
+      if (weather == null) continue;
+
+      final hourlyKwh = installation.calculateHourlyProduction(weather);
+
+      // Sprawdzamy, czy mamy cennik dla podanej taryfy
+      if (!installation.priceTariffs.containsKey(tariff)) {
+        throw ArgumentError('Nie znaleziono taryfy "$tariff" w priceTariffs.');
+      }
+      final List<double> tariffPrices = installation.priceTariffs[tariff]!;
+
+      // Jeśli taryfa ma 24 ceny (na dobę), powielamy ją na cały okres danych
+      List<double> pricesForPeriod;
+      if (tariffPrices.length == 24 && hourlyKwh.length % 24 == 0) {
+        pricesForPeriod = List.generate(
+          hourlyKwh.length,
+          (i) => tariffPrices[i % 24],
+        );
+      } else if (tariffPrices.length == hourlyKwh.length) {
+        pricesForPeriod = tariffPrices;
+      } else {
+        throw ArgumentError(
+          'Długość listy cen dla taryfy "$tariff" (${tariffPrices.length}) '
+          'nie pasuje do liczby godzin produkcji (${hourlyKwh.length}).',
+        );
+      }
+
+      double savings = 0.0;
+      for (int i = 0; i < hourlyKwh.length; i++) {
+        savings += hourlyKwh[i] * pricesForPeriod[i];
+      }
+      totalSavings += savings;
+    }
+
+    return totalSavings;
   }
 }

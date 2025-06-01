@@ -40,6 +40,7 @@ class _MainPageState extends State<MainPage> {
     final FStyle style = FTheme.of(
       context,
     ).style; // Assuming FStyle doesn't need to change or is handled elsewhere.
+    final String tarrif;
 
     return FTheme(
       data: FThemeData(colors: currentFColors, style: style),

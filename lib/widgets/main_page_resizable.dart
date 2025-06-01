@@ -8,6 +8,8 @@ import 'smooth_line_chart.dart';
 // ... other imports
 
 class chartAndInfoVertical extends StatelessWidget {
+  const chartAndInfoVertical({super.key});
+
   @override
   Widget build(BuildContext context) {
     final mainState = Provider.of<MainState>(context);
@@ -37,7 +39,6 @@ class chartAndInfoVertical extends StatelessWidget {
                 bottom: 20.0,
                 left: 10.0,
                 right: 10.0,
-                top: 10.0,
               ),
               child: SmoothLineChart(values: cumulativeHourlyProduction),
             ),
