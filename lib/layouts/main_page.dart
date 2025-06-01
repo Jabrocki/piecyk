@@ -50,16 +50,14 @@ class _MainPageState extends State<MainPage> {
             footer: FBottomNavigationBar(children: const []),
             sidebar: const MainSidebar(),
             child: Center(
-              child: Center(
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 50),
-                    Expanded(child: DeviceInfoCollumn()),
-                    SizedBox(width: 50),
-                    Expanded(child: chartAndInfoVertical()),
-                    SizedBox(width: 50),
-                  ],
-                ),
+              child: Row(
+                children: <Widget>[
+                  SizedBox(width: 50),
+                  Expanded(child: DeviceInfoCollumn()),
+                  SizedBox(width: 50),
+                  Expanded(child: chartAndInfoVertical()),
+                  SizedBox(width: 50),
+                ],
               ),
             ),
           ),
