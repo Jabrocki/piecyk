@@ -9,6 +9,7 @@ import 'package:piecyk/widgets/circular_chart.dart'; // Import the circular char
 import 'package:piecyk/widgets/vertical_button_list.dart'; // Import the vertical button list
 
 class chartAndInfoVertical extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     final mainState = Provider.of<MainState>(context);
     if (mainState.state is WeatherSuccess) {
@@ -17,6 +18,11 @@ class chartAndInfoVertical extends StatelessWidget {
       final cumulativeHourlyProduction = mainState.calculateCumulativeSum(
         calculatedHourlyProduction,
       );
+
+      // Check if there is any data to display
+      if (cumulativeHourlyProduction.isEmpty) {
+        return Center(child: Text('No installation data available.'));
+      }
 
       return DecoratedBox(
         decoration: BoxDecoration(
@@ -29,9 +35,9 @@ class chartAndInfoVertical extends StatelessWidget {
         ),
       );
     } else if (mainState.state is WeatherLoading) {
-      return SizedBox.shrink();
+      return const Center(child: CircularProgressIndicator());
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 }

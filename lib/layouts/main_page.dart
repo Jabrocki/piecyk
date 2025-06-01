@@ -27,6 +27,7 @@ class _MainPageState extends State<MainPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await context.read<MainState>().loadWeatherForCurrentLocation();
     });
+    context.read<MainState>().listenToInstallations();
   }
 
   @override

@@ -6,14 +6,41 @@ import 'package:piecyk/models/weather_model.dart';
 import 'package:piecyk/providers/weather_state.dart';
 import 'package:piecyk/repositories/weather_repository.dart';
 import 'package:piecyk/services/location_service.dart';
+import 'package:piecyk/services/firestore/installtions.dart';
 
 class MainState extends ChangeNotifier {
   final WeatherRepository weatherRepo;
   final LocationService locationService;
   final Logger logger;
   MainState({required this.weatherRepo, required this.locationService, required this.logger});
+  List<Installation> installations = [];
 
   WeatherState state = WeatherDefault();
+
+  void listenToInstallations() {
+    watchInstallationData().listen((dataList) {
+      print('Received installations: $dataList');
+      installations = dataList.map((data) {
+        // Parse Firestore data to Installation and Panel
+        final panel = Panel(
+          powerWatts: data['panelPower'] ?? 0.0,
+          maxVoltage: data['maximumVoltage'] ?? 0.0,
+          tiltAngleDegrees: data['tilt'] ?? 0.0,
+          efficiencySTC: 0.18, // or parse if stored
+          areaM2: 2, // or parse if stored
+          noct: 25, // or parse if stored
+          temperatureCoeff: 0.004, // or parse if stored
+        );
+        return Installation(
+          panel: panel,
+          quantity: data['panelNumber'] ?? 0,
+          tiltAngleDegrees: data['tilt'] ?? 0.0,
+          azimuthDegrees: data['azimuth'] ?? 0.0,
+        );
+      }).toList();
+      notifyListeners();
+    });
+  }
 
   Future<void> loadWeatherForCurrentLocation() async {
     try {
@@ -91,27 +118,19 @@ class MainState extends ChangeNotifier {
     }
   }
 
-  static final Panel panel1 = Panel(
-    powerWatts: 1200,
-    maxVoltage: 560,
-    tiltAngleDegrees: 35,
-    efficiencySTC: 0.18,
-    areaM2: 2,
-    noct: 25,
-    temperatureCoeff: 0.004,
-  );
-  final Installation installation = Installation(
-    panel: panel1,
-    quantity: 5,
-    tiltAngleDegrees: panel1.tiltAngleDegrees,
-    azimuthDegrees: 270,
-  );
-
+  /// Zwraca produkcję energii dla pierwszej instalacji z listy (jeśli istnieje)
   List<double> calculateProduction(WeatherModel weather) {
-    return installation.calculateHourlyProduction(weather);
+    if (installations.isNotEmpty) {
+      return installations.first.calculateHourlyProduction(weather);
+    }
+    return [];
   }
 
+  /// Zwraca częściowe sumy dla podanej listy energii (jeśli jest instalacja)
   List<double> calculateCumulativeSum(List<double> inputList) {
-    return installation.cumulativeSum(inputList);
+    if (installations.isNotEmpty) {
+      return installations.first.cumulativeSum(inputList);
+    }
+    return [];
   }
 }
