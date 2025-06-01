@@ -2,6 +2,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 import 'dart:async';
 import 'package:geocode/geocode.dart'; // Added geocode package
+import 'package:piecyk/services/firestore/location.dart';
 
 class LocationService {
   final Logger logger;
@@ -56,6 +57,10 @@ class LocationService {
 
     logger.d("=== receiving location... ===\\\\n");
     _currentPosition = await Geolocator.getCurrentPosition();
+
+    // Update Firestore location document
+    await initOrUpdateLocation(_currentPosition!.latitude, _currentPosition!.longitude);
+
     return _currentPosition!;
   }
 
