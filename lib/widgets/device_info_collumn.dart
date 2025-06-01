@@ -73,7 +73,7 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
     return SizedBox(
       width: double.infinity, // Take full width
       height: double.infinity, // Take full height
-      child: DecoratedBox(
+      child: Column( children: [DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(color: context.theme.colors.border),
           borderRadius: BorderRadius.circular(8),
@@ -81,17 +81,35 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
         child: Column(
           children: <Widget>[
             VerticalDeviceList(),
-            SelectTarif(
-              selectedTariff: selectedTariff,
-              onChanged: (String? newTariff) {
-                if (newTariff != null) {
-                  setState(() {
-                    selectedTariff = newTariff;
-                  });
-                }
-              },
-            ),
             Padding(
+              padding: const EdgeInsets.all(8.0),child:
+                SelectTarif(
+                
+                selectedTariff: selectedTariff,
+                onChanged: (String? newTariff) {
+                  if (newTariff != null) {
+                    setState(() {
+                      selectedTariff = newTariff;
+                    });
+                  }
+                },
+              ),
+            ),
+        
+          ],
+        ),
+      ),
+      const SizedBox(height: 10),
+      DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border.all(color: context.theme.colors.border),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: 
+        SizedBox(
+              width: double.infinity, // Take full width
+           child:
+        Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
@@ -118,10 +136,9 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
+            ), 
       ),
-    );
+    )]));
   }
 }
+
