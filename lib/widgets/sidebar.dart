@@ -4,13 +4,18 @@ import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 
 class MainSidebar extends StatefulWidget {
-  const MainSidebar({super.key});
+  final Function(bool)? onDownloadDataPressed; // Optional callback to trigger menu visibility
+
+  const MainSidebar({
+    super.key,
+    this.onDownloadDataPressed, // Add the parameter
+  });
 
   @override
   State<MainSidebar> createState() => _MainSidebarState();
 }
 
-class _MainSidebarState extends State<MainSidebar> {
+class _MainSidebarState extends State<MainSidebar> with TickerProviderStateMixin {
   bool _expanded = true;
 
   @override
@@ -29,8 +34,8 @@ class _MainSidebarState extends State<MainSidebar> {
       children: [
         AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          curve: Curves.easeOut, // Changed from Curves.easeInOut
-          width: sidebarWidth.toDouble(), // <-- minimum width for button
+          curve: Curves.easeOut,
+          width: sidebarWidth.toDouble(),
           child: _expanded
               ? FSidebar(
                   width: 300,
@@ -67,8 +72,14 @@ class _MainSidebarState extends State<MainSidebar> {
                         ),
                         FSidebarItem(
                           icon: const Icon(FIcons.download),
-                          label: showLabels ? const Text('Download Data') : null,
-                          onPress: () {},
+                          label: showLabels
+                              ? const Text('Download Data')
+                              : null,
+                          onPress: () {
+                            if (widget.onDownloadDataPressed != null) {
+                              widget.onDownloadDataPressed!(!_expanded); // Trigger menu visibility toggle
+                            }
+                          },
                         ),
                         FSidebarItem(
                           icon: const Icon(FIcons.settings),
@@ -79,14 +90,22 @@ class _MainSidebarState extends State<MainSidebar> {
                     ),
                   ],
                 )
-              : Container( // Container to hold the IconButton when collapsed
+              : Container(
+                  // Container to hold the IconButton when collapsed
                   alignment: Alignment.bottomCenter,
                   padding: const EdgeInsets.only(bottom: 8), // Add some padding
                   child: IconButton(
-                    icon: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
+                    icon: Icon(
+                      themeProvider.isDarkMode
+                          ? Icons.dark_mode
+                          : Icons.light_mode,
+                    ),
                     tooltip: 'Toggle theme',
                     onPressed: () {
-                      Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+                      Provider.of<ThemeProvider>(
+                        context,
+                        listen: false,
+                      ).toggleTheme();
                     },
                   ),
                 ),
@@ -113,10 +132,15 @@ class _MainSidebarState extends State<MainSidebar> {
             left: 0,
             right: 0, // Center it horizontally if sidebar is wider
             child: IconButton(
-              icon: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
+              icon: Icon(
+                themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+              ),
               tooltip: 'Toggle theme',
               onPressed: () {
-                Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+                Provider.of<ThemeProvider>(
+                  context,
+                  listen: false,
+                ).toggleTheme();
               },
             ),
           ),
