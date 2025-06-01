@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 import 'package:piecyk/providers/toggle_menu_state.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
-import 'package:piecyk/widgets/select_date.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

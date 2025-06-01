@@ -123,7 +123,7 @@ class SmoothLineChart extends StatelessWidget {
             getDotPainter: (spot, percent, barData, index) =>
                 FlDotCirclePainter(
                   radius: 4,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                   strokeWidth: 0,
                 ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart'; // Assuming context.theme.colors.border comes from here or a similar extension
-import 'package:piecyk/models/weather_model.dart';
 import 'package:piecyk/providers/main_state.dart';
 import 'package:piecyk/providers/weather_state.dart';
 import 'package:provider/provider.dart';
@@ -41,9 +40,7 @@ class chartAndInfoVertical extends StatelessWidget {
                 left: 10.0,
                 right: 10.0,
               ),
-              child: SmoothLineChart(
-                values: cumulativeHourlyProduction,
-              ),
+              child: SmoothLineChart(values: cumulativeHourlyProduction),
             ),
             SelectDate(),
           ],

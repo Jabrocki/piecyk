@@ -25,6 +25,9 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
         ? (mainState.state as WeatherSuccess).weather
         : null;
 
+    double totalEnergyProduces = 0;
+    double maxEnergyProducesInDay = 0;
+
     // Prepare weatherModels list for all installations (for demo: use the same weather for all)
     final List<WeatherModel> weatherModels =
         hasInstallations && weatherData != null
@@ -40,6 +43,26 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
         );
       } catch (e) {
         totalSave = 0.0;
+      }
+    }
+
+    if (mainState.state is WeatherSuccess) {
+      final weather = (mainState.state as WeatherSuccess).weather;
+      final calculatedHourlyProduction = mainState.calculateProduction(weather);
+      final cumulativeHourlyProduction = mainState.calculateCumulativeSum(
+        calculatedHourlyProduction,
+      );
+      totalEnergyProduces = cumulativeHourlyProduction.last;
+      double tmp = double.minPositive;
+      for (int i = 0; i < calculatedHourlyProduction.length; i++) {
+        if (i % 24 != 0) {
+          tmp += calculatedHourlyProduction[i];
+        } else {
+          if (tmp > maxEnergyProducesInDay) {
+            maxEnergyProducesInDay = tmp;
+          }
+          tmp = 0.0;
+        }
       }
     }
 
@@ -66,12 +89,30 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Total savings: ${totalSave.toStringAsFixed(2)} zł',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    'Total savings: ${totalSave.toStringAsFixed(2)} zł',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    'Total Energy Produced: ${totalEnergyProduces.toStringAsFixed(2)} [kWh]',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    'Maximum energy produces in day: ${maxEnergyProducesInDay.toStringAsFixed(2)} [kWh]',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

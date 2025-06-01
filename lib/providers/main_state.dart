@@ -74,10 +74,8 @@ class MainState extends ChangeNotifier {
       state = WeatherLoading();
       notifyListeners();
 
-      
       await locationService.updateLocationFromAddress(address);
 
-      
       final weather = await weatherRepo.getWeatherForCurrentLocation();
       logger.d("=== successfully fetched weather after location update ===\\n");
       state = WeatherSuccess(weather);
@@ -96,14 +94,11 @@ class MainState extends ChangeNotifier {
     try {
       logger.d("=== updating coordinates: lat=$latitude, lon=$longitude ===\n");
 
-      
       state = WeatherLoading();
       notifyListeners();
 
-      
       locationService.updateLocationFromCoordinates(latitude, longitude);
 
-      
       try {
         final weather = await weatherRepo.getWeatherForCurrentLocation();
         logger.d(
