@@ -103,10 +103,10 @@ class _SelectDateState extends State<SelectDate> with TickerProviderStateMixin {
         ),
         const SizedBox(height: 10),
         // Wyświetlanie wybranych dat
-        Text('Początek: ${_formatDate(_startDateController.value)}'),
-        Text('Koniec: ${_formatDate(_endDateController.value)}'),
-        Text('static poczatek: ${WeatherApiClient.startDate}'),
-        Text('static koniec: ${WeatherApiClient.endDate}')
+        // Text('Początek: ${_formatDate(_startDateController.value)}'),
+        // Text('Koniec: ${_formatDate(_endDateController.value)}'),
+        // Text('static poczatek: ${WeatherApiClient.startDate}'),
+        // Text('static koniec: ${WeatherApiClient.endDate}')
       ],
     );
   }

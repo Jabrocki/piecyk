@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
+import 'package:piecyk/theme/light_theme.dart';
+import 'package:piecyk/theme/dark_theme.dart';
 
 class SmoothLineChart extends StatelessWidget {
   final List<double> values;
@@ -114,14 +116,14 @@ class SmoothLineChart extends StatelessWidget {
           spots: spots,
           isCurved: true,
           curveSmoothness: 0.5,
-          color: Colors.blue,
+          color: Theme.of(context).colorScheme.primary,
           barWidth: 3,
           dotData: FlDotData(
             show: spots.length <= 15,
             getDotPainter: (spot, percent, barData, index) =>
                 FlDotCirclePainter(
                   radius: 4,
-                  color: const Color.fromARGB(255, 30, 233, 74),
+                  color: Theme.of(context).colorScheme.onBackground,
                   strokeWidth: 0,
                 ),
           ),
