@@ -170,7 +170,7 @@ class _CustomPortalState extends State<CustomPortal> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(FIcons.plug, color: themeColors.foreground), // Use theme foreground
+                          Icon(FIcons.plug, color: themeColors.foreground),// Use theme foreground
                           SizedBox(width: 8),
                           Text(
                             "Instalation",
@@ -180,6 +180,11 @@ class _CustomPortalState extends State<CustomPortal> {
                               color: themeColors.foreground, // Use theme foreground
                             ),
                           ),
+                          Spacer(),
+                          FTappable(
+                            onPress: controllerPortal.toggle,
+                            child: Icon(FIcons.x),
+                          ), 
                         ],
                       ),
                     ),
