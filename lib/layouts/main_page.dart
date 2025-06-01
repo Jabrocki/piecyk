@@ -54,35 +54,8 @@ class _MainPageState extends State<MainPage> {
             header: const FHeader(title: TitleWidget()),
             childPad: true,
             footer: FBottomNavigationBar(children: const []),
-<<<<<<< HEAD
-            sidebar: const MainSidebar(),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 24.0,
-                ), // Add bottom padding here
-                child: Column(
-                  children: <Widget>[
-                    LocationChanger(),
-                    Expanded(
-                      child: Row(
-                        children: <Widget>[
-                          SizedBox(width: 10),
-                          Expanded(child: DeviceInfoCollumn()),
-                          SizedBox(width: 15),
-                          Expanded(child: chartAndInfoVertical()),
-                          SizedBox(width: 10),
-                        ],
-                      ),
-                    ),
-                    //sdfsdfsdf
-                  ],
-                ),
-              ),
-=======
             sidebar: MainSidebar(
               onDownloadDataPressed: (_) => toggleMenuState.toggleMenu(),
->>>>>>> 016c7fd41705e2d159abcfd288a460fb85876f83
             ),
             child: Stack(
               children: [
@@ -125,10 +98,10 @@ class _MainPageState extends State<MainPage> {
                       : const SizedBox.shrink(),
                 ),
               ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }
