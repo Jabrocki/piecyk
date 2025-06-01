@@ -66,11 +66,11 @@ class _MainPageState extends State<MainPage> {
                       Expanded(
                         child: Row(
                           children: <Widget>[
-                            const SizedBox(width: 50),
+                            const SizedBox(width: 10),
                             Expanded(child: DeviceInfoCollumn()),
-                            const SizedBox(width: 50),
+                            const SizedBox(width: 15),
                             Expanded(child: chartAndInfoVertical()),
-                            const SizedBox(width: 50),
+                            const SizedBox(width: 10),
                           ],
                         ),
                       ),
@@ -101,6 +101,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ),
+    ),
     );
   }
 }
