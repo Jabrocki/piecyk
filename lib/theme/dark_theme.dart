@@ -8,11 +8,9 @@ final ThemeData darkTheme = ThemeData(
   colorScheme: const ColorScheme.dark(
     primary: Colors.green,
     secondary: Colors.greenAccent,
-    background: Colors.black,
     surface: Colors.black,
     onPrimary: Colors.black,
     onSecondary: Colors.black,
-    onBackground: Colors.white,
     onSurface: Colors.white,
   ),
   textTheme: GoogleFonts.robotoCondensedTextTheme(
@@ -25,7 +23,10 @@ final ThemeData darkTheme = ThemeData(
       headlineMedium: TextStyle(color: Colors.white),
       headlineSmall: TextStyle(color: Colors.white),
       titleLarge: TextStyle(color: Colors.white),
-      labelLarge: TextStyle(color: Colors.black, fontWeight: FontWeight.w400), // Added for buttons
+      labelLarge: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w400,
+      ), // Added for buttons
     ),
   ),
   appBarTheme: const AppBarTheme(
@@ -42,7 +43,9 @@ final ThemeData darkTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: const Color(0xFF4CAF50),
       foregroundColor: Colors.black, // Text on elevated buttons
-      textStyle: GoogleFonts.robotoCondensed(fontWeight: FontWeight.w400), // Apply font to ElevatedButton
+      textStyle: GoogleFonts.robotoCondensed(
+        fontWeight: FontWeight.w400,
+      ), // Apply font to ElevatedButton
     ),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:piecyk/models/weather_model.dart';
 import 'package:piecyk/providers/main_state.dart';
 import 'package:piecyk/theme/general_style.dart';
 import 'package:piecyk/widgets/device_info_collumn.dart';
@@ -54,11 +53,14 @@ class _MainPageState extends State<MainPage> {
             footer: FBottomNavigationBar(children: const []),
             sidebar: const MainSidebar(),
             child: Center(
-              child: Center(
-                child: Column( // Changed Row to Column
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 24.0,
+                ), // Add bottom padding here
+                child: Column(
                   children: <Widget>[
-                    LocationChanger(), // Added LocationChanger
-                    Expanded( // Wrap existing Row in Expanded
+                    LocationChanger(),
+                    Expanded(
                       child: Row(
                         children: <Widget>[
                           SizedBox(width: 50),
