@@ -9,7 +9,7 @@ final FColors lightFColors = FColors(
   foreground: Colors.black,
   primary: Colors.green,
   primaryForeground: Colors.white,
-  secondary: Colors.greenAccent.shade200,
+  secondary: Colors.greenAccent.shade100,
   secondaryForeground: Colors.black,
   muted: Colors.grey.shade200,
   mutedForeground: Colors.grey.shade500,

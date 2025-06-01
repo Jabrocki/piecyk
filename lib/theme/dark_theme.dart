@@ -7,7 +7,7 @@ final ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   colorScheme: const ColorScheme.dark(
     primary: Colors.green,
-    secondary: Colors.greenAccent,
+    secondary: Colors.green,
     surface: Colors.black,
     onPrimary: Colors.black,
     onSecondary: Colors.black,

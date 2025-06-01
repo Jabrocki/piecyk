@@ -117,6 +117,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 32),
                       FButton(
+                        style: FButtonStyle.outline,
                         onPress: () => login(context), // context here is the Builder's context
                         child: Text("Login as guest"),
                       ),
@@ -128,7 +129,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text("Or use", style: TextStyle(color: colors.mutedForeground)),
+                            child: Text("Or", style: TextStyle(color: colors.mutedForeground)),
                           ),
                           Expanded(
                             child: Divider(color: colors.border, thickness: 0.5),
@@ -138,6 +139,7 @@ class LoginPage extends StatelessWidget {
                       SizedBox(height: 10),
                       FButton(
                         onPress: logInWithGoogle,
+                        style: FButtonStyle.outline, // Changed to secondary style
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -151,6 +153,7 @@ class LoginPage extends StatelessWidget {
                           ],
                         ),
                       ),
+                      SizedBox(height: 25),
                       Container(
                         alignment: Alignment.bottomCenter,
                         padding: const EdgeInsets.only(bottom: 8), // Add some padding

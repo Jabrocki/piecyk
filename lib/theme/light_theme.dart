@@ -7,7 +7,7 @@ final ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   colorScheme: const ColorScheme.light(
     primary: Colors.green,
-    secondary: Colors.greenAccent,
+    secondary: Colors.green,
     surface: Colors.white,
     onPrimary: Colors.white,
     onSecondary: Colors.black,
