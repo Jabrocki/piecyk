@@ -11,7 +11,7 @@ class MainSidebar extends StatefulWidget {
 }
 
 class _MainSidebarState extends State<MainSidebar> {
-  bool _expanded = true;
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
