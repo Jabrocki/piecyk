@@ -11,6 +11,7 @@ import 'package:piecyk/widgets/title_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
+import 'package:piecyk/widgets/select_date.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -70,7 +71,8 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ],
                 ),
-              ),
+                SelectDate(),
+              ],),
             ),
           ),
         ),
