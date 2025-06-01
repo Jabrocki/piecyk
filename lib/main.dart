@@ -13,6 +13,7 @@ import 'services/weather_api_client.dart';
 //Providers
 import 'providers/main_state.dart';
 import 'package:piecyk/providers/theme_provider.dart'; // Added import
+import 'package:piecyk/providers/toggle_menu_state.dart';
 
 //Layouts
 import 'layouts/main_page.dart';
@@ -59,6 +60,7 @@ Future<void> main() async {
           // Added ThemeProvider
           create: (_) => ThemeProvider(),
         ),
+        ChangeNotifierProvider(create: (_) => ToggleMenuState()), // Register ToggleMenuState
       ],
       child: MyApp(),
     ),
