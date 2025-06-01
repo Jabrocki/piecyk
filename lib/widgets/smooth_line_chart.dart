@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:piecyk/theme/light_theme.dart';
 import 'package:piecyk/theme/dark_theme.dart';
+import 'package:piecyk/services/weather_api_client.dart';
 
 class SmoothLineChart extends StatelessWidget {
   final List<double> values;
@@ -34,11 +35,11 @@ class SmoothLineChart extends StatelessWidget {
     // Prepare X axis labels as date range
     String xAxisLabel = 'index';
     if (values.length > 1) {
-      final now = DateTime.now();
-      final start = now.subtract(Duration(hours: values.length - 1));
-      final end = now;
+      //final now = DateTime.now();
+      final start = WeatherApiClient.startDate;
+      final end = WeatherApiClient.endDate;
       final df = DateFormat('yyyy-MM-dd');
-      xAxisLabel = '${df.format(start)} — ${df.format(end)}';
+      xAxisLabel = '$start — $end';
     }
 
     final lineChartData = LineChartData(
