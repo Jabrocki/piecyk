@@ -84,7 +84,7 @@ class SmoothLineChart extends StatelessWidget {
             reservedSize: 40,
             getTitlesWidget: (value, meta) {
               return Text(
-                value.toStringAsFixed(1),
+                value.toStringAsFixed(2),
                 style: const TextStyle(fontSize: 12),
               );
             },
