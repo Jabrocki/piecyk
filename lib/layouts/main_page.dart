@@ -59,7 +59,6 @@ class _MainPageState extends State<MainPage> {
     final FStyle style = FTheme.of(
       context,
     ).style; // Assuming FStyle doesn't need to change or is handled elsewhere.
-    final tarrifs = ["C22", "C21", "C12A", "C11"];
 
     return FTheme(
       data: FThemeData(colors: currentFColors, style: style),
@@ -121,7 +120,7 @@ class _MainPageState extends State<MainPage> {
                                   children: [
                                     SizedBox(height: 30),
                                     FButton(
-                                      onPress: downloadInstallationCSV, 
+                                      onPress: downloadInstallationCSV,
                                       child: Row(
                                         children: [
                                           Icon(FIcons.cable),
@@ -133,13 +132,26 @@ class _MainPageState extends State<MainPage> {
                                     SizedBox(height: 10),
                                     FButton(
                                       onPress: () {
-                                        final mainState = context.read<MainState>();
+                                        final mainState = context
+                                            .read<MainState>();
                                         if (mainState.state is WeatherSuccess) {
-                                          final weather = (mainState.state as WeatherSuccess).weather;
-                                          downloadForecastingCSV(mainState, weather); // Pass MainState and WeatherModel
+                                          final weather =
+                                              (mainState.state
+                                                      as WeatherSuccess)
+                                                  .weather;
+                                          downloadForecastingCSV(
+                                            mainState,
+                                            weather,
+                                          ); // Pass MainState and WeatherModel
                                         } else {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(content: Text("Weather data not available")),
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                "Weather data not available",
+                                              ),
+                                            ),
                                           );
                                         }
                                       },
