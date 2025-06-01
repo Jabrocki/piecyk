@@ -5,6 +5,7 @@ import '../services/firestore/installtions.dart';
 
 class VerticalDeviceList extends StatelessWidget {
   const VerticalDeviceList({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,6 @@ class CustomPortal extends StatefulWidget {
 
 class _CustomPortalState extends State<CustomPortal> {
   final controllerPortal = OverlayPortalController();
-  final double _textSpacing = 4;
 
   // Text controllers
   final nameController = TextEditingController();
@@ -62,69 +62,58 @@ class _CustomPortalState extends State<CustomPortal> {
   final tiltController = TextEditingController();
   final azimuthController = TextEditingController();
 
-  // Title color states for each field
-  Color nameTitleColor = Colors.black;
-  Color panelPowerTitleColor = Colors.black;
-  Color panelNumberTitleColor = Colors.black;
-  Color maximumVoltageTitleColor = Colors.black;
-  Color tiltTitleColor = Colors.black;
-  Color azimuthTitleColor = Colors.black;
+  // Error states for each field
+  bool nameHasError = false;
+  bool panelPowerHasError = false;
+  bool panelNumberHasError = false;
+  bool maximumVoltageHasError = false;
+  bool tiltHasError = false;
+  bool azimuthHasError = false;
 
   @override
   void initState() {
     super.initState();
-    // Add listeners to revert all title colors to black when typing in any field
-    nameController.addListener(_revertAllTitleColors);
-    panelPowerController.addListener(_revertAllTitleColors);
-    panelNumberController.addListener(_revertAllTitleColors);
-    maximumVoltageController.addListener(_revertAllTitleColors);
-    tiltController.addListener(_revertAllTitleColors);
-    azimuthController.addListener(_revertAllTitleColors);
+    // Add listeners to clear all field errors when typing in any field
+    nameController.addListener(_clearAllFieldErrors);
+    panelPowerController.addListener(_clearAllFieldErrors);
+    panelNumberController.addListener(_clearAllFieldErrors);
+    maximumVoltageController.addListener(_clearAllFieldErrors);
+    tiltController.addListener(_clearAllFieldErrors);
+    azimuthController.addListener(_clearAllFieldErrors);
   }
 
-  void _revertAllTitleColors() {
-    setState(() {
-      nameTitleColor = Colors.black;
-      panelPowerTitleColor = Colors.black;
-      panelNumberTitleColor = Colors.black;
-      maximumVoltageTitleColor = Colors.black;
-      tiltTitleColor = Colors.black;
-      azimuthTitleColor = Colors.black;
-    });
+  void _clearAllFieldErrors() {
+    if (mounted) {
+      setState(() {
+        nameHasError = false;
+        panelPowerHasError = false;
+        panelNumberHasError = false;
+        maximumVoltageHasError = false;
+        tiltHasError = false;
+        azimuthHasError = false;
+      });
+    }
   }
 
   Future<void> _addInstaltion() async {
+    if (!mounted) return;
     setState(() {
-      // Validate all fields and update title colors
-      nameTitleColor = nameController.text.isNotEmpty
-          ? Colors.black
-          : Colors.red;
-      panelPowerTitleColor = panelPowerController.text.isNotEmpty
-          ? Colors.black
-          : Colors.red;
-      panelNumberTitleColor = panelNumberController.text.isNotEmpty
-          ? Colors.black
-          : Colors.red;
-      maximumVoltageTitleColor = maximumVoltageController.text.isNotEmpty
-          ? Colors.black
-          : Colors.red;
-      tiltTitleColor = tiltController.text.isNotEmpty
-          ? Colors.black
-          : Colors.red;
-      azimuthTitleColor = azimuthController.text.isNotEmpty
-          ? Colors.black
-          : Colors.red;
+      // Validate all fields and update error states
+      nameHasError = nameController.text.isEmpty;
+      panelPowerHasError = panelPowerController.text.isEmpty;
+      panelNumberHasError = panelNumberController.text.isEmpty;
+      maximumVoltageHasError = maximumVoltageController.text.isEmpty;
+      tiltHasError = tiltController.text.isEmpty;
+      azimuthHasError = azimuthController.text.isEmpty;
     });
 
     // Check if any field is invalid
-    if ([
-      nameTitleColor,
-      panelPowerTitleColor,
-      panelNumberTitleColor,
-      maximumVoltageTitleColor,
-      tiltTitleColor,
-      azimuthTitleColor,
-    ].contains(Colors.red)) {
+    if (nameHasError ||
+        panelPowerHasError ||
+        panelNumberHasError ||
+        maximumVoltageHasError ||
+        tiltHasError ||
+        azimuthHasError) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please fill in all fields")),
       );
@@ -149,14 +138,15 @@ class _CustomPortalState extends State<CustomPortal> {
     tiltController.clear();
     azimuthController.clear();
 
-    // Reset title colors
-    _revertAllTitleColors();
+    // Reset error states (already handled by listeners, but good for explicit reset)
+    _clearAllFieldErrors();
 
     controllerPortal.toggle();
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeColors = FTheme.of(context).colors;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: LayoutBuilder(
@@ -169,8 +159,8 @@ class _CustomPortalState extends State<CustomPortal> {
               width: constraints.maxWidth,
               child: Container(
                 decoration: BoxDecoration(
-                  color: context.theme.colors.background,
-                  border: Border.all(color: context.theme.colors.border),
+                  color: themeColors.background, // Use theme background
+                  border: Border.all(color: themeColors.border), // Use theme border
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -179,14 +169,15 @@ class _CustomPortalState extends State<CustomPortal> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                        children: const [
-                          Icon(FIcons.plug),
+                        children: [
+                          Icon(FIcons.plug, color: themeColors.foreground), // Use theme foreground
                           SizedBox(width: 8),
                           Text(
                             "Instalation",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
+                              color: themeColors.foreground, // Use theme foreground
                             ),
                           ),
                         ],
@@ -196,42 +187,49 @@ class _CustomPortalState extends State<CustomPortal> {
                       "Instaltion name",
                       nameController,
                       "text",
-                      nameTitleColor,
+                      nameHasError,
+                      themeColors,
                     ),
                     _buildTextField(
                       "Panel Power [kW]",
                       panelPowerController,
                       "decimal",
-                      panelPowerTitleColor,
+                      panelPowerHasError,
+                      themeColors,
                     ),
                     _buildTextField(
                       "Number of panels",
                       panelNumberController,
                       "integer",
-                      panelNumberTitleColor,
+                      panelNumberHasError,
+                      themeColors,
                     ),
                     _buildTextField(
                       "Maximum Voltage [V]",
                       maximumVoltageController,
                       "decimal",
-                      maximumVoltageTitleColor,
+                      maximumVoltageHasError,
+                      themeColors,
                     ),
                     _buildTextField(
                       "Tilt [degrees]",
                       tiltController,
                       "decimal",
-                      tiltTitleColor,
+                      tiltHasError,
+                      themeColors,
                     ),
                     _buildTextField(
                       "Azimuth [degrees]",
                       azimuthController,
                       "decimal",
-                      azimuthTitleColor,
+                      azimuthHasError,
+                      themeColors,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: FButton(
                         onPress: _addInstaltion,
+                        // FButton's child Text will use primaryForeground by default if not specified
                         child: const Text("Add"),
                       ),
                     ),
@@ -241,11 +239,13 @@ class _CustomPortalState extends State<CustomPortal> {
             ),
             child: FButton(
               onPress: controllerPortal.toggle,
+              // FButton's children (Icon and Text) will use primaryForeground by default
               child: Row(
+                mainAxisSize: MainAxisSize.min, // To keep Row compact
                 children: const [
-                  Icon(FIcons.zap),
+                  Icon(FIcons.zap), // Color will be handled by FButton
                   SizedBox(width: 10),
-                  Text('Add Instalation'),
+                  Text('Add Instalation'), // Color will be handled by FButton
                 ],
               ),
             ),
@@ -259,23 +259,25 @@ class _CustomPortalState extends State<CustomPortal> {
     String label,
     TextEditingController controller,
     String fieldType,
-    Color titleColor,
+    bool hasError,
+    FColors themeColors,
   ) {
     final List<TextInputFormatter> inputFormatters = fieldType == "integer"
-        ? [FilteringTextInputFormatter.digitsOnly] // Allow only integers
+        ? [FilteringTextInputFormatter.digitsOnly]
         : fieldType == "text"
         ? [
-            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
-          ] // Allow only letters and spaces
+            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\s]')), // Allow letters, numbers, and spaces
+          ]
         : [
             FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-          ]; // Allow only decimals
+          ];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: FTextField(
         controller: controller,
-        label: Text(label, style: TextStyle(color: titleColor)),
-        inputFormatters: inputFormatters,
+        label: Text(label, style: TextStyle(color: hasError ? themeColors.destructive : themeColors.mutedForeground)), // Use mutedForeground for label
+        // FTextField text color should be handled by its style or default to foreground
+        // If FTextField border needs to change on error, it should be handled internally or via a prop
       ),
     );
   }
@@ -294,6 +296,7 @@ class _HoverableListTileState extends State<_HoverableListTile> {
 
   @override
   Widget build(BuildContext context) {
+    final themeColors = FTheme.of(context).colors;
     return MouseRegion(
       onEnter: (_) => setState(() => _hovering = true),
       onExit: (_) => setState(() => _hovering = false),
@@ -305,26 +308,27 @@ class _HoverableListTileState extends State<_HoverableListTile> {
         ),
         child: Card(
           elevation: 4,
+          color: _hovering ? themeColors.secondary.withOpacity(0.1) : themeColors.background, // Subtle hover, theme background
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
+            side: BorderSide(color: themeColors.border), // Theme border
           ),
-          child: Theme(
+          child: Theme( // Keep this Theme to override specific Material defaults if needed
             data: Theme.of(context).copyWith(
-              dividerColor: Colors.transparent, // Removes divider lines
-              highlightColor:
-                  Colors.transparent, // Prevents color change on tap
-              splashColor: Colors.transparent, // Prevents ripple effect on tap
-              hoverColor: Colors.transparent, // Prevents color change on hover
+              dividerColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              hoverColor: Colors.transparent,
             ),
             child: ExpansionTile(
-              leading: const Icon(FIcons.housePlug),
+              leading: Icon(FIcons.housePlug, color: themeColors.primary), // Use primary color for leading icon
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               collapsedShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              backgroundColor: Colors.transparent, // No background color
+              backgroundColor: Colors.transparent,
               tilePadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
@@ -339,11 +343,11 @@ class _HoverableListTileState extends State<_HoverableListTile> {
                   Expanded(
                     child: Text(
                       widget.doc['name'],
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: themeColors.foreground), // Use theme foreground
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.delete),
+                    icon: Icon(Icons.delete, color: themeColors.destructive), // Use theme destructive
                     onPressed: () async =>
                         await removeInstallationData(widget.doc['docId']),
                   ),
@@ -354,26 +358,31 @@ class _HoverableListTileState extends State<_HoverableListTile> {
                   FIcons.plugZap,
                   'Power',
                   '${widget.doc['panelPower']} kW',
+                  themeColors,
                 ),
                 _buildInfoRow(
                   FIcons.columns3,
                   'Panels',
                   '${widget.doc['panelNumber']}',
+                  themeColors,
                 ),
                 _buildInfoRow(
                   FIcons.zap,
                   'Voltage',
                   '${widget.doc['maximumVoltage']} V',
+                  themeColors,
                 ),
                 _buildInfoRow(
                   FIcons.arrowRight,
                   'Tilt',
                   '${widget.doc['tilt']}°',
+                  themeColors,
                 ),
                 _buildInfoRow(
                   FIcons.compass,
                   'Azimuth',
                   '${widget.doc['azimuth']}°',
+                  themeColors,
                 ),
               ],
             ),
@@ -383,13 +392,17 @@ class _HoverableListTileState extends State<_HoverableListTile> {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String label, String value) {
-    return Row(
-      children: [
-        Icon(icon, size: 16),
-        const SizedBox(width: 4),
-        Text('$label: $value', style: const TextStyle(fontSize: 12)),
-      ],
+  Widget _buildInfoRow(IconData icon, String label, String value, FColors themeColors) {
+    return Padding( // Added padding for better spacing
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: themeColors.mutedForeground), // Use mutedForeground for info icons
+          const SizedBox(width: 8), // Increased spacing
+          Text('$label: ', style: TextStyle(fontSize: 12, color: themeColors.mutedForeground, fontWeight: FontWeight.bold)), // Label bold
+          Expanded(child: Text(value, style: TextStyle(fontSize: 12, color: themeColors.foreground))), // Value uses foreground
+        ],
+      ),
     );
   }
 }

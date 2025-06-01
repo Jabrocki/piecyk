@@ -29,7 +29,6 @@ class _LocationChangerState extends State<LocationChanger> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = FTheme.of(context); // Get FTheme instance
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 00, 10, 10),
