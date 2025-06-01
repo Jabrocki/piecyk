@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:provider/provider.dart';
 import 'package:piecyk/providers/theme_provider.dart';
+import 'rounded_image_square.dart';
 
 class MainSidebar extends StatefulWidget {
-  final Function(bool)? onDownloadDataPressed; // Optional callback to trigger menu visibility
+  final Function(bool)?
+  onDownloadDataPressed; // Optional callback to trigger menu visibility
 
   const MainSidebar({
     super.key,
@@ -16,7 +20,8 @@ class MainSidebar extends StatefulWidget {
 }
 
 class _MainSidebarState extends State<MainSidebar>
-    with SingleTickerProviderStateMixin { // Added SingleTickerProviderStateMixin
+    with SingleTickerProviderStateMixin {
+  // Added SingleTickerProviderStateMixin
   bool _expanded = false;
   late AnimationController _stripeAnimationController;
   late Animation<Color?> _stripeGradientColor1;
@@ -32,31 +37,29 @@ class _MainSidebarState extends State<MainSidebar>
   }
 
   void _initializeStripeAnimations(ThemeProvider themeProvider) {
-    final finalGradientColor = themeProvider.isDarkMode ? Colors.blueGrey[700]! : Colors.lightBlue[100]!;
+    final finalGradientColor = themeProvider.isDarkMode
+        ? Colors.blueGrey[700]!
+        : Colors.lightBlue[100]!;
 
-    _stripeGradientColor1 = TweenSequence<Color?>(
-      [
-        TweenSequenceItem(
-          tween: ColorTween(begin: Colors.green, end: finalGradientColor),
-          weight: 100.0,
-        ),
-      ],
-    ).animate(_stripeAnimationController);
+    _stripeGradientColor1 = TweenSequence<Color?>([
+      TweenSequenceItem(
+        tween: ColorTween(begin: Colors.green, end: finalGradientColor),
+        weight: 100.0,
+      ),
+    ]).animate(_stripeAnimationController);
 
-    _stripeGradientColor2 = TweenSequence<Color?>(
-      [
-        TweenSequenceItem(
-          tween: ColorTween(begin: Colors.yellow, end: Colors.green),
-          weight: 100.0,
-        ),
-      ],
-    ).animate(_stripeAnimationController);
+    _stripeGradientColor2 = TweenSequence<Color?>([
+      TweenSequenceItem(
+        tween: ColorTween(begin: Colors.yellow, end: Colors.green),
+        weight: 100.0,
+      ),
+    ]).animate(_stripeAnimationController);
 
     if (_expanded && !_stripeAnimationController.isAnimating) {
       _stripeAnimationController.repeat();
     }
   }
-  
+
   bool _animationsInitialized = false;
 
   @override
@@ -84,12 +87,12 @@ class _MainSidebarState extends State<MainSidebar>
         : 48.0;
     final showLabels = sidebarWidth >= 169;
 
-    if (!showLabels && _expanded) { // Ensure sidebarWidth is not too small when expanded but labels not shown
+    if (!showLabels && _expanded) {
+      // Ensure sidebarWidth is not too small when expanded but labels not shown
       sidebarWidth = 80.0;
     } else if (!_expanded) {
       sidebarWidth = 48.0; // Collapsed width
     }
-
 
     return Stack(
       children: [
@@ -123,7 +126,9 @@ class _MainSidebarState extends State<MainSidebar>
                         ),
                         FSidebarItem(
                           icon: const Icon(FIcons.download),
-                          label: showLabels ? const Text('Download Data') : null,
+                          label: showLabels
+                              ? const Text('Download Data')
+                              : null,
                           onPress: () {
                             if (widget.onDownloadDataPressed != null) {
                               widget.onDownloadDataPressed!(!_expanded);
@@ -137,30 +142,123 @@ class _MainSidebarState extends State<MainSidebar>
                           children: [
                             FSidebarItem(
                               icon: const Icon(FIcons.flame),
-                              label: showLabels ? const Text('Piec Koksowniczy') : null,
+                              label: showLabels
+                                  ? const Text('Piec Koksowniczy')
+                                  : null,
                               initiallyExpanded: true,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                                  child: Text('Bartłomiej Pietrzak', style: TextStyle(fontSize: 15)),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: RoundedImageSquare(
+                                    imageProvider: AssetImage(
+                                      '../../assets/bartek.png',
+                                    ),
+                                  ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                                  child: Text('Bartosz Pajor', style: TextStyle(fontSize: 15)),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: Text(
+                                    'Bartłomiej Pietrzak',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                                  child: Text('Franciszek Razny', style: TextStyle(fontSize: 15)),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: RoundedImageSquare(
+                                    imageProvider: AssetImage(
+                                      '../assets/bartosz.jpeg',
+                                    ),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: Text(
+                                    'Bartosz Pajor',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                                  child: Text('Jan Jabrocki', style: TextStyle(fontSize: 15)),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: RoundedImageSquare(
+                                    imageProvider: AssetImage(
+                                      '../assets/franek.jpg',
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: Text(
+                                    'Franciszek Razny',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: RoundedImageSquare(
+                                    imageProvider: AssetImage(
+                                      '../assets/jabro.jpeg',
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 4.0,
+                                  ),
+                                  child: Text(
+                                    'Jan Jabrocki',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                              child: Text('Kosciuszkon 2025', style: TextStyle(fontSize: 15)),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                                vertical: 4.0,
+                              ),
+                              child: Text(
+                                'Kosciuszkon 2025',
+                                style: TextStyle(fontSize: 15),
+                              ),
                             ),
                           ],
                         ),
@@ -168,7 +266,8 @@ class _MainSidebarState extends State<MainSidebar>
                     ),
                   ],
                 )
-              : Container( // Collapsed state content
+              : Container(
+                  // Collapsed state content
                   alignment: Alignment.center, // Center the icon
                   width: sidebarWidth, // Use fixed collapsed width
                 ),
@@ -182,8 +281,10 @@ class _MainSidebarState extends State<MainSidebar>
             child: AnimatedBuilder(
               animation: _stripeAnimationController,
               builder: (context, child) {
-                final color1 = _stripeGradientColor1.value ?? Colors.transparent;
-                final color2 = _stripeGradientColor2.value ?? Colors.transparent;
+                final color1 =
+                    _stripeGradientColor1.value ?? Colors.transparent;
+                final color2 =
+                    _stripeGradientColor2.value ?? Colors.transparent;
                 return Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -196,9 +297,13 @@ class _MainSidebarState extends State<MainSidebar>
               },
             ),
           ),
-        Positioned( // Menu Icon
+        Positioned(
+          // Menu Icon
           top: 8,
-          left: _expanded ? (sidebarWidth - 48) / 2 : (48.0 - 48) / 2, // Center icon when collapsed, or adjust as needed
+          left: _expanded
+              ? (sidebarWidth - 48) / 2
+              : (48.0 - 48) /
+                    2, // Center icon when collapsed, or adjust as needed
           child: SizedBox(
             width: 48,
             height: 48,
@@ -212,7 +317,10 @@ class _MainSidebarState extends State<MainSidebar>
                   if (_expanded) {
                     // Ensure animations are initialized if not already
                     if (!_animationsInitialized) {
-                       final tp = Provider.of<ThemeProvider>(context, listen: false);
+                      final tp = Provider.of<ThemeProvider>(
+                        context,
+                        listen: false,
+                      );
                       _initializeStripeAnimations(tp);
                       _animationsInitialized = true;
                     }
@@ -240,11 +348,16 @@ class _MainSidebarState extends State<MainSidebar>
               ),
               tooltip: 'Toggle theme',
               onPressed: () {
-                Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-                 // Re-initialize animations if theme changes and they depend on it
-                _initializeStripeAnimations(Provider.of<ThemeProvider>(context, listen: false));
+                Provider.of<ThemeProvider>(
+                  context,
+                  listen: false,
+                ).toggleTheme();
+                // Re-initialize animations if theme changes and they depend on it
+                _initializeStripeAnimations(
+                  Provider.of<ThemeProvider>(context, listen: false),
+                );
                 if (_expanded && !_stripeAnimationController.isAnimating) {
-                   _stripeAnimationController.repeat();
+                  _stripeAnimationController.repeat();
                 }
               },
             ),
@@ -260,8 +373,13 @@ class _MainSidebarState extends State<MainSidebar>
               ),
               tooltip: 'Toggle theme',
               onPressed: () {
-                 Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-                 _initializeStripeAnimations(Provider.of<ThemeProvider>(context, listen: false));
+                Provider.of<ThemeProvider>(
+                  context,
+                  listen: false,
+                ).toggleTheme();
+                _initializeStripeAnimations(
+                  Provider.of<ThemeProvider>(context, listen: false),
+                );
               },
             ),
           ),
