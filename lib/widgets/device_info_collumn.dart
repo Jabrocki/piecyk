@@ -52,7 +52,7 @@ class _DeviceInfoCollumnState extends State<DeviceInfoCollumn> {
       final cumulativeHourlyProduction = mainState.calculateCumulativeSum(
         calculatedHourlyProduction,
       );
-      totalEnergyProduces = cumulativeHourlyProduction.last;
+      //totalEnergyProduces = cumulativeHourlyProduction.last;
       double tmp = double.minPositive;
       for (int i = 0; i < calculatedHourlyProduction.length; i++) {
         if (i % 24 != 0) {
