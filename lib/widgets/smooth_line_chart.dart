@@ -1,44 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
 
 class SmoothLineChart extends StatelessWidget {
-  // Przekazujemy listę wartości przez konstruktor
   final List<double> values;
 
   const SmoothLineChart({super.key, required this.values});
 
   @override
   Widget build(BuildContext context) {
-    // 1. Zamiana wartości na FlSpot
-    final List<FlSpot> spots = values.asMap().entries.map((entry) {
-      return FlSpot(entry.key.toDouble(), entry.value);
-    }).toList();
+    // Limit to max 15 points
+    int maxPoints = 15;
+    int step = (values.length / maxPoints).ceil();
+    if (step < 1) step = 1;
 
-    // 2. Tworzymy konfigurację wykresu
+    // Downsample data for chart
+    final List<FlSpot> spots = [
+      for (int i = 0; i < values.length; i += step)
+        FlSpot(i.toDouble(), values[i]),
+    ];
+
+    // For axis scaling, use only the displayed points
+    final yValues = spots.map((e) => e.y).toList();
+    final minY = yValues.isEmpty
+        ? 0.0
+        : yValues.reduce((a, b) => a < b ? a : b) * 0.9;
+    final maxY = yValues.isEmpty
+        ? 1.0
+        : yValues.reduce((a, b) => a > b ? a : b) * 1.1;
+
+    // Prepare X axis labels as date range
+    String xAxisLabel = 'index';
+    if (values.length > 1) {
+      final now = DateTime.now();
+      final start = now.subtract(Duration(hours: values.length - 1));
+      final end = now;
+      final df = DateFormat('yyyy-MM-dd');
+      xAxisLabel = '${df.format(start)} — ${df.format(end)}';
+    }
+
     final lineChartData = LineChartData(
-      // zakres osi X od 0 do ostatniego indeksu
-      minX: 0,
-      maxX: (values.length - 1).toDouble(),
-
-      // zakres Y dobierzemy dynamicznie (np. min i max z values, z niewielkim marginesem)
-      minY: values.reduce((a, b) => a < b ? a : b) * 0.9,
-      maxY: values.reduce((a, b) => a > b ? a : b) * 1.1,
-
+      minX: spots.isEmpty ? 0 : spots.first.x,
+      maxX: spots.isEmpty ? 1 : spots.last.x,
+      minY: minY,
+      maxY: maxY,
       titlesData: FlTitlesData(
         bottomTitles: AxisTitles(
+          axisNameWidget: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              xAxisLabel,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 30,
+            reservedSize: 40,
+            interval: 1,
             getTitlesWidget: (value, meta) {
-              // Możemy pokazywać np. indeks lub zamienić na jakiś label
-              return Text(
-                value.toInt().toString(),
-                style: const TextStyle(fontSize: 12),
-              );
+              // Show label for first, last, and every 2nd point if few points
+              if (value == spots.first.x ||
+                  value == spots.last.x ||
+                  (spots.length <= 8 && value % 2 == 0)) {
+                return Text(
+                  value.toInt().toString(),
+                  style: const TextStyle(fontSize: 12),
+                );
+              }
+              return const SizedBox.shrink();
             },
           ),
         ),
         leftTitles: AxisTitles(
+          axisNameWidget: const Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: Text(
+              'power [kW]',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
           sideTitles: SideTitles(
             showTitles: true,
             reservedSize: 40,
@@ -53,16 +93,13 @@ class SmoothLineChart extends StatelessWidget {
         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
         rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
       ),
-
       gridData: FlGridData(
         show: true,
-        horizontalInterval:
-            ((values.reduce((a, b) => a > b ? a : b) -
-                values.reduce((a, b) => a < b ? a : b)) /
-            5),
+        horizontalInterval: yValues.isEmpty || minY == maxY
+            ? 1
+            : (maxY - minY) / 5,
         drawVerticalLine: false,
       ),
-
       borderData: FlBorderData(
         show: true,
         border: const Border(
@@ -72,32 +109,27 @@ class SmoothLineChart extends StatelessWidget {
           right: BorderSide(width: 0),
         ),
       ),
-
       lineBarsData: [
         LineChartBarData(
           spots: spots,
-          isCurved: true, // <--- TU decydujemy o wygładzeniu linii
-          curveSmoothness:
-              0.5, // [0..1] – im wyżej, tym bardziejzakrzywiona linia
-          color: Colors.blue, // kolor linii
-          barWidth: 3, // grubość linii
+          isCurved: true,
+          curveSmoothness: 0.5,
+          color: Colors.blue,
+          barWidth: 3,
           dotData: FlDotData(
-            show: true, // czy pokazywać kropki w punktach
+            show: spots.length <= 15,
             getDotPainter: (spot, percent, barData, index) =>
                 FlDotCirclePainter(
                   radius: 4,
-                  color: const Color.fromARGB(255, 30, 233, 74), // kolor kropek
+                  color: const Color.fromARGB(255, 30, 233, 74),
                   strokeWidth: 0,
                 ),
           ),
-          belowBarData: BarAreaData(
-            show: false, // czy rysować wypełnienie pod linią
-          ),
+          belowBarData: BarAreaData(show: false),
         ),
       ],
     );
 
-    // 3. Zwracamy gotowy widget
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: AspectRatio(aspectRatio: 1.7, child: LineChart(lineChartData)),

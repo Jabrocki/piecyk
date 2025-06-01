@@ -23,6 +23,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     context.read<MainState>().loadWeatherForCurrentLocation();
+    context.read<MainState>().listenToInstallations();
   }
 
   @override
