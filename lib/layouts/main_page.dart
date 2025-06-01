@@ -61,11 +61,11 @@ class _MainPageState extends State<MainPage> {
                     Expanded( // Wrap existing Row in Expanded
                       child: Row(
                         children: <Widget>[
-                          SizedBox(width: 50),
+                          SizedBox(width: 10),
                           Expanded(child: DeviceInfoCollumn()),
-                          SizedBox(width: 50),
+                          SizedBox(width: 15),
                           Expanded(child: chartAndInfoVertical()),
-                          SizedBox(width: 50),
+                          SizedBox(width: 10),
                         ],
                       ),
                     ),

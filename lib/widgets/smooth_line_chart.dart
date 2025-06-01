@@ -47,7 +47,7 @@ class SmoothLineChart extends StatelessWidget {
       titlesData: FlTitlesData(
         bottomTitles: AxisTitles(
           axisNameWidget: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(top: 0.0),
             child: Text(
               xAxisLabel,
               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -73,10 +73,10 @@ class SmoothLineChart extends StatelessWidget {
         ),
         leftTitles: AxisTitles(
           axisNameWidget: const Padding(
-            padding: EdgeInsets.only(right: 8.0),
+            padding: EdgeInsets.only(top: 0.0),
             child: Text(
               'power [kW]',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ),
           sideTitles: SideTitles(
