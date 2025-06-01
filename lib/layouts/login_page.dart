@@ -118,9 +118,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 32),
                       FButton(
                         onPress: () => login(context), // context here is the Builder's context
-                        child: Text(
-                          "Login as guest",
-                        ),
+                        child: Text("Login as guest"),
                       ),
                       SizedBox(height: 10),
                       Row(
@@ -149,9 +147,7 @@ class LoginPage extends StatelessWidget {
                               height: 24,
                             ),
                             const SizedBox(width: 8),
-                            Text(
-                              "Login with Google",
-                            ),
+                            Text("Login with Google"),
                           ],
                         ),
                       ),
