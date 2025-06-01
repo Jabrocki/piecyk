@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:piecyk/providers/main_state.dart';
+import 'package:piecyk/services/csv/forecasting.dart';
+import 'package:piecyk/services/csv/instalation.dart';
 import 'package:piecyk/theme/general_style.dart';
 import 'package:piecyk/widgets/device_info_collumn.dart';
 import 'package:piecyk/widgets/location_changer.dart';
@@ -12,6 +14,7 @@ import 'package:piecyk/providers/theme_provider.dart';
 import 'package:piecyk/providers/toggle_menu_state.dart';
 import 'package:piecyk/theme/forui_theme_adapter.dart'; // Import the adapter
 import '../services/firestore/location.dart';
+import 'package:piecyk/providers/weather_state.dart'; // Import WeatherState for WeatherSuccess
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -118,7 +121,7 @@ class _MainPageState extends State<MainPage> {
                                   children: [
                                     SizedBox(height: 30),
                                     FButton(
-                                      onPress: () {},
+                                      onPress: downloadInstallationCSV, 
                                       child: Row(
                                         children: [
                                           Icon(FIcons.cable),
@@ -129,7 +132,17 @@ class _MainPageState extends State<MainPage> {
                                     ),
                                     SizedBox(height: 10),
                                     FButton(
-                                      onPress: () {},
+                                      onPress: () {
+                                        final mainState = context.read<MainState>();
+                                        if (mainState.state is WeatherSuccess) {
+                                          final weather = (mainState.state as WeatherSuccess).weather;
+                                          downloadForecastingCSV(mainState, weather); // Pass MainState and WeatherModel
+                                        } else {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text("Weather data not available")),
+                                          );
+                                        }
+                                      },
                                       child: Row(
                                         children: [
                                           Icon(FIcons.chartLine),

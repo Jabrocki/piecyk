@@ -27,6 +27,7 @@ dependencies:
   geocode: ^1.0.3
   google_sign_in_web: ^0.12.4+4
   google_sign_in: ^6.3.0
+  to_csv: ^5.0.0
 
 dev_dependencies:
   flutter_test:
