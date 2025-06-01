@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -16,8 +17,22 @@ class WeatherApiClient {
   }) : httpClient = httpClient ?? http.Client();
 
   // TEMPORARILY fixed values of {start,end}date and parameters in json
-  final String startDate = "2024-04-01";
-  final String endDate = "2024-05-02";
+  static String startDate = DateFormat(
+    'yyyy-MM-dd',
+  ).format(DateTime.now().subtract(const Duration(days: 36)));
+  static String endDate = DateFormat(
+    'yyyy-MM-dd',
+  ).format(DateTime.now().subtract(const Duration(days: 6)));
+  // date setters
+  static set setStartDate(String value) {
+    startDate = value;
+  }
+
+  static set setEndDate(String value) {
+    endDate = value;
+  }
+  // date getters
+
   final String parameters =
       "direct_normal_irradiance,diffuse_radiation,shortwave_radiation,apparent_temperature,wind_speed_100m";
 
