@@ -4,6 +4,7 @@ import 'package:piecyk/models/weather_model.dart';
 import 'package:piecyk/providers/main_state.dart';
 import 'package:piecyk/theme/general_style.dart';
 import 'package:piecyk/widgets/device_info_collumn.dart';
+import 'package:piecyk/widgets/location_changer.dart';
 import 'package:piecyk/widgets/sidebar.dart';
 import 'package:piecyk/widgets/main_page_resizable.dart';
 import 'package:piecyk/widgets/title_widget.dart';
@@ -22,14 +23,15 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    context.read<MainState>().loadWeatherForCurrentLocation();
+    // Ensure the location is determined and then load weather
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.read<MainState>().loadWeatherForCurrentLocation();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final mainState = Provider.of<MainState>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
-    // final mainStateProvider = Provider.of<MainState>(context);
     // Determine which FColors to use based on the current theme.
     final FColors currentFColors = themeProvider.isDarkMode
         ? darkFColors
@@ -50,14 +52,23 @@ class _MainPageState extends State<MainPage> {
             footer: FBottomNavigationBar(children: const []),
             sidebar: const MainSidebar(),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  SizedBox(width: 50),
-                  Expanded(child: DeviceInfoCollumn()),
-                  SizedBox(width: 50),
-                  Expanded(child: chartAndInfoVertical()),
-                  SizedBox(width: 50),
-                ],
+              child: Center(
+                child: Column( // Changed Row to Column
+                  children: <Widget>[
+                    LocationChanger(), // Added LocationChanger
+                    Expanded( // Wrap existing Row in Expanded
+                      child: Row(
+                        children: <Widget>[
+                          SizedBox(width: 50),
+                          Expanded(child: DeviceInfoCollumn()),
+                          SizedBox(width: 50),
+                          Expanded(child: chartAndInfoVertical()),
+                          SizedBox(width: 50),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -66,4 +77,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-// helo
