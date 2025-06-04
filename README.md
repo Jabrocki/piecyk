@@ -93,26 +93,22 @@ W SUNSEER skupiliśmy się na **prostocie** i **skuteczności** – chcemy, aby 
 Poniżej kilka zrzutów ekranu pokazujących kluczowe funkcje aplikacji:
 
 1. **Ekran logowania**  
-   ![Ekran logowania](docs/images/location_screen.png)
+   ![Ekran logowania](docs/images/login_screen.png)
 
 2. **Sekcja do zarządzania instalacjami**  
-   ![dodawanie instalacji](docs/images/savings_chart.png)
+   ![dodawanie instalacji](docs/images/install_prompt.png)
 
 3. **Pobieranie lokalizacji domyślnej/customowej**  
-   ![pasek pobierania lokalizacji](docs/images/installation_details.png)
+   ![pasek pobierania lokalizacji](docs/images/location_changer.png)
 
 4. **Wykres potencjalnie wyprodukowanej energi w zadanym okresie**
-   ![wykres wyprodukowanej energi]()
+   ![wykres wyprodukowanej energi](docs/images/chart.png)
 
 5. **Potencjalne oszczędności z uwzględnieniem taryfy prądowej**
-   ![potencjalne oszczedności]()
+   ![potencjalne oszczedności](docs/images/savings.png)
 
 6. **Opcja pobrania danych historycznych/oszczedności**
-   ![opcje pobierania]()
-
-7. **Autorzy**
-   ![autorzy]()
-
+   ![opcje pobierania](docs/images/download.png)
 
 ---
 
