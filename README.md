@@ -95,19 +95,22 @@ Poniżej kilka zrzutów ekranu pokazujących kluczowe funkcje aplikacji:
 1. **Ekran logowania**  
    ![Ekran logowania](docs/images/login_screen.png)
 
-2. **Sekcja do zarządzania instalacjami**  
+2. **Ekran główny**  
+   ![Ekran główny](docs/images/overview.png)
+
+3. **Sekcja do zarządzania instalacjami**  
    ![dodawanie instalacji](docs/images/install_prompt.png)
 
-3. **Pobieranie lokalizacji domyślnej/customowej**  
+4. **Pobieranie lokalizacji domyślnej/customowej**  
    ![pasek pobierania lokalizacji](docs/images/location_changer.png)
 
-4. **Wykres potencjalnie wyprodukowanej energi w zadanym okresie**
+5. **Wykres potencjalnie wyprodukowanej energi w zadanym okresie**
    ![wykres wyprodukowanej energi](docs/images/chart.png)
 
-5. **Potencjalne oszczędności z uwzględnieniem taryfy prądowej**
+6. **Potencjalne oszczędności z uwzględnieniem taryfy prądowej**
    ![potencjalne oszczedności](docs/images/savings.png)
 
-6. **Opcja pobrania danych historycznych/oszczedności**
+7. **Opcja pobrania danych historycznych/oszczedności**
    ![opcje pobierania](docs/images/download.png)
 
 ---
