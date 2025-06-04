@@ -120,7 +120,7 @@ Poniżej kilka zrzutów ekranu pokazujących kluczowe funkcje aplikacji:
 - **Franciszek Raźny** – frontend, animacje, UI/UX, pobieranie customowej lokalizacji (geocoding)
 - **Jan Jabrocki** – backend, integracje z Firebase, logika serwera  
 - **Bartłomiej Pietrzak** – algorytmy szacunkowe, UI,
-- **Bartosz Pajor** – logika biznesowa, pobieranie, parsowanie, przetwarzanie danych pogodowych, pobieranie lokalizacji domyślnej
+- **Bartosz Pajor** – pobieranie, parsowanie, przetwarzanie danych pogodowych, pobieranie lokalizacji domyślnej
 
 ---
 
