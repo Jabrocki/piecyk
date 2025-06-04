@@ -108,8 +108,8 @@ Poniżej kilka zrzutów ekranu pokazujących kluczowe funkcje aplikacji:
 
 - **Franciszek Raźny** – frontend, animacje, UI/UX  
 - **Jan Jabrocki** – backend, integracje z Firebase, logika serwera  
-- **Bartłomiej Pietrzak** – algorytmy szacunkowe, pobieranie danych pogodowych  
-- **Bartosz Pajor** – dokumentacja, testy, wdrożenia CI/CD  
+- **Bartłomiej Pietrzak** – algorytmy szacunkowe, UI,
+- **Bartosz Pajor** – logika biznesowa, pobieranie, parsowanie, przetwarzanie danych pogodowych
 
 ---
 
