@@ -92,24 +92,36 @@ W SUNSEER skupiliśmy się na **prostocie** i **skuteczności** – chcemy, aby 
 
 Poniżej kilka zrzutów ekranu pokazujących kluczowe funkcje aplikacji:
 
-1. **Ekran główny z wyborem lokalizacji**  
-   ![Wybór lokalizacji](docs/images/location_screen.png)
+1. **Ekran logowania**  
+   ![Ekran logowania](docs/images/location_screen.png)
 
-2. **Wykres potencjalnych oszczędności**  
-   ![Wykres oszczędności](docs/images/savings_chart.png)
+2. **Sekcja do zarządzania instalacjami**  
+   ![dodawanie instalacji](docs/images/savings_chart.png)
 
-3. **Szczegóły instalacji i pobieranie prognozy**  
-   ![Szczegóły instalacji](docs/images/installation_details.png)
+3. **Pobieranie lokalizacji domyślnej/customowej**  
+   ![pasek pobierania lokalizacji](docs/images/installation_details.png)
+
+4. **Wykres potencjalnie wyprodukowanej energi w zadanym okresie**
+   ![wykres wyprodukowanej energi]()
+
+5. **Potencjalne oszczędności z uwzględnieniem taryfy prądowej**
+   ![potencjalne oszczedności]()
+
+6. **Opcja pobrania danych historycznych/oszczedności**
+   ![opcje pobierania]()
+
+7. **Autorzy**
+   ![autorzy]()
 
 
 ---
 
 ## 8. Autorzy / Zespół
 
-- **Franciszek Raźny** – frontend, animacje, UI/UX  
+- **Franciszek Raźny** – frontend, animacje, UI/UX, pobieranie customowej lokalizacji (geocoding)
 - **Jan Jabrocki** – backend, integracje z Firebase, logika serwera  
 - **Bartłomiej Pietrzak** – algorytmy szacunkowe, UI,
-- **Bartosz Pajor** – logika biznesowa, pobieranie, parsowanie, przetwarzanie danych pogodowych
+- **Bartosz Pajor** – logika biznesowa, pobieranie, parsowanie, przetwarzanie danych pogodowych, pobieranie lokalizacji domyślnej
 
 ---
 
